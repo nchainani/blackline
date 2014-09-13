@@ -6,6 +6,7 @@ FactoryGirl.define do
     direction "East"
     polyline "{at~Fxh|uOjAAAj@@tT@|L?bE_B@MIC?o@@kBDcAByBBgAB}B?]F_EBqEHY?U?yAC_EDgEFMEEAuDAy@Bg@@?q@?q@C{GGuN"
     active true
+    locations {[create(:location)]}
   end
 
   factory :location do

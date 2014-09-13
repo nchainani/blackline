@@ -17,14 +17,16 @@ class CreateRouteTables < ActiveRecord::Migration
       t.string "direction", null: false
       t.timestamps
     end
+    add_index(:locations, [:latitude, :longitude], unique: true)
+    add_index(:locations, [:longitude, :latitude], unique: true)
 
-    create_table :route_templates_locations do |t|
+    create_table :locations_route_templates do |t|
       t.integer "route_template_id"
       t.integer "location_id"
     end
 
-    add_foreign_key( :route_templates_locations, :route_templates )
-    add_foreign_key( :route_templates_locations, :locations )
+    add_foreign_key( :locations_route_templates, :route_templates )
+    add_foreign_key( :locations_route_templates, :locations )
 
     create_table :buses do |t|
       t.integer "capacity"

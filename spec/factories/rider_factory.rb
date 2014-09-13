@@ -33,7 +33,6 @@ FactoryGirl.define do
   factory :ticket do
     rider
     route
-    location
     payment {create(:payment_detail)}
   end
 

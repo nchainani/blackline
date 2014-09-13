@@ -8,10 +8,11 @@ gem 'rails-api'
 gem 'mysql2'
 gem 'foreigner'
 gem 'bcrypt'
+gem 'active_model_serializers'
 
 gem 'factory_girl_rails'
 
-group :test do
+group :test, :development do
   gem 'rspec-rails'
 end
 
