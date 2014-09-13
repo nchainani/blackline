@@ -11,7 +11,7 @@ class CreateRiderTables < ActiveRecord::Migration
 
     create_table :payment_details do |t|
       t.integer "rider_id"
-      t.string "credit_card_number" # obscured string with only last 4 digits visible ***********4242
+      t.string "number" # obscured string with only last 4 digits visible ***********4242
       t.string "token" # think of encrypting this as well
       t.boolean "active", default: true
       t.timestamps
@@ -25,7 +25,7 @@ class CreateRiderTables < ActiveRecord::Migration
       t.integer "remaining_tickets", default: 0
       t.datetime "purchase_date", null: false
       t.datetime "expiry_date"
-      t.string "status", default: "pending" # goes from pendint to active, complete, inactive
+      t.string "status", default: "pending" # goes from pending to complete
       t.timestamps
     end
     add_foreign_key( :passes, :riders )
@@ -34,9 +34,10 @@ class CreateRiderTables < ActiveRecord::Migration
     create_table :tickets do |t|
       t.integer "route_id", null: false
       t.integer "rider_id", null: false
-      t.integer "location_id", null: false # do we care?
-      t.integer "subject_id", null: false
-      t.string "subject_type", null: false # the subject is 'payment' or 'pass' based on what the user used to purchase this ticket
+      t.integer "location_id", null: false # do we care? (might need for bought_location and then boarded_location)
+      t.integer "payment_id", null: false
+      t.string "payment_type", null: false # the payment is 'payment' or 'pass' based on what the user used to purchase this ticket
+      t.boolean "boarded", default: false
       t.timestamps
     end
     add_foreign_key( :tickets, :routes )
@@ -45,6 +46,7 @@ class CreateRiderTables < ActiveRecord::Migration
     create_table :favorite_locations do |t|
       t.integer "rider_id", null: false
       t.string "name", null: false
+      t.string "description"
       t.float "latitude", null: false
       t.float "longitude", null: false
       t.timestamps

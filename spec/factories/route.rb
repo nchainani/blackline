@@ -19,11 +19,14 @@ FactoryGirl.define do
     capacity 60
     type "Full Bus"
     owner "R n R Buses"
-    registation_number "XY11ZA2"
+    registration_number "XY11ZA2"
   end
 
-  factory :route_templates_locations do
+  factory :route do
     route_template
-    location
+    bus
+    run_date Date.today
+    times "4.30p"
+    total_seats 60
   end
 end
