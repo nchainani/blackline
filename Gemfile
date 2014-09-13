@@ -12,7 +12,7 @@ gem 'bcrypt'
 gem 'factory_girl_rails'
 
 group :test do
-  gem 'rspec'
+  gem 'rspec-rails'
 end
 
 # To use ActiveModel has_secure_password

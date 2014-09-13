@@ -25,7 +25,7 @@ FactoryGirl.define do
   factory :route do
     route_template
     bus
-    run_date Date.today
+    run_datetime 2.hours.from_now
     times "4.30p"
     total_seats 60
   end

@@ -37,7 +37,7 @@ class CreateRouteTables < ActiveRecord::Migration
     create_table :routes do |t|
       t.integer "route_template_id", null: false
       t.integer "bus_id", null: false
-      t.datetime "run_date"
+      t.datetime "run_datetime"
       t.string "times"
       t.integer "total_seats"
       t.timestamps
