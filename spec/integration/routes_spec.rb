@@ -42,6 +42,18 @@ describe "Route Controller spec" do
     end
   end
 
+  context "GET /routes/:id" do
+    it "404 if a route does not exist" do
+      api_get "/routes/1010101"
+      response.status.should == 404
+    end
+
+    it "clients can ask for a specific route" do
+      body = api_get "/routes/#{route.id}"
+      verify_route(body, route)
+    end
+  end
+
   def verify_route(route_in_response, route)
     route_in_response['id'].should == route.id
     route_in_response['direction'].should == route.direction

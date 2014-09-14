@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  resources :routes, only: [:index]
+  resources :routes, only: [:index, :show]
 
   get '/status' => 'application#status'
   # The priority is based upon order of creation: first created -> highest priority.

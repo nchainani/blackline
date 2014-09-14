@@ -9,7 +9,6 @@ class Route < ActiveRecord::Base
   end
 
   def self.find_nearby_routes(lat, lng, radius = 50, options = {})
-    # find routes in the next 48 hours and that run near the user's location
     nearby_stops = Location.nearby_stops(lat, lng, radius)
 
     Route.active.
