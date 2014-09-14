@@ -1,5 +1,5 @@
 class Location < ActiveRecord::Base
-  has_and_belongs_to_many :route_templates
+  has_and_belongs_to_many :routes
 
   # returns locations in the given radius
   scope :nearby_stops, lambda { |lat, lng, radius|
@@ -11,7 +11,7 @@ class Location < ActiveRecord::Base
     lng2 = lng + (radius / (69.0 * Math.cos(radians(lat))))
 
     # This logic borrowed from http://www.plumislandmedia.net/mysql/haversine-mysql-nearest-loc/
-    select("*, 
+    select("id, latitude, longitude,
             69 * DEGREES(ACOS(COS(RADIANS(#{lat}))
                * COS(RADIANS(locations.latitude))
                * COS(RADIANS(#{lng}) - RADIANS(locations.longitude))

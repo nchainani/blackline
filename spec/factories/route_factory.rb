@@ -1,5 +1,5 @@
 FactoryGirl.define do
-  factory :route_template do
+  factory :route do
     name "66 West Express"
     description "66 West Express"
     number 66
@@ -23,8 +23,8 @@ FactoryGirl.define do
     registration_number "XY11ZA2"
   end
 
-  factory :route do
-    route_template
+  factory :route_run do
+    route
     bus
     run_datetime 2.hours.from_now
     times "4.30p"

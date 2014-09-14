@@ -34,15 +34,15 @@ class CreateRiderTables < ActiveRecord::Migration
     add_foreign_key( :passes, :payment_details)
 
     create_table :tickets do |t|
-      t.integer "route_id", null: false
+      t.integer "route_run_id", null: false
       t.integer "rider_id", null: false
-      t.integer "location_id", null: false # do we care? (might need for bought_location and then boarded_location)
+      t.integer "location_id" # do we care? (might need for bought_location and then boarded_location)
       t.integer "payment_id", null: false
       t.string "payment_type", null: false # the payment is 'payment' or 'pass' based on what the user used to purchase this ticket
       t.boolean "boarded", default: false
       t.timestamps
     end
-    add_foreign_key( :tickets, :routes )
+    add_foreign_key( :tickets, :route_runs )
     add_foreign_key( :tickets, :riders )
 
     create_table :favorite_locations do |t|

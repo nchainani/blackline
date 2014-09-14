@@ -32,7 +32,7 @@ FactoryGirl.define do
 
   factory :ticket do
     rider
-    route
+    route_run
     payment {create(:payment_detail)}
   end
 

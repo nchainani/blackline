@@ -8,7 +8,7 @@ gem 'rails-api'
 gem 'mysql2'
 gem 'foreigner'
 gem 'bcrypt'
-gem 'active_model_serializers'
+gem 'active_model_serializers', "0.8.1"
 
 gem 'factory_girl_rails'
 
