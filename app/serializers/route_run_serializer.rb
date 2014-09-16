@@ -1,10 +1,6 @@
 class RouteRunSerializer < ActiveModel::Serializer
   attributes :id, :remaining_seats, :details
 
-  def remaining_seats
-    object.total_seats - Ticket.where(route_run_id: object.id).count
-  end
-
   def details
     times = object.times.split(",")
     array = []
@@ -12,6 +8,7 @@ class RouteRunSerializer < ActiveModel::Serializer
       array << {
         lat: location.latitude,
         lng: location.longitude,
+        id: location.id,
         name: location.name,
         time: times[index]
       }

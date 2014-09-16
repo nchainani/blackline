@@ -9,6 +9,7 @@ gem 'mysql2'
 gem 'foreigner'
 gem 'bcrypt'
 gem 'active_model_serializers', "0.8.1"
+gem 'enumerize'
 
 gem 'factory_girl_rails'
 

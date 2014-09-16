@@ -39,7 +39,7 @@ class CreateRiderTables < ActiveRecord::Migration
       t.integer "location_id" # do we care? (might need for bought_location and then boarded_location)
       t.integer "payment_id", null: false
       t.string "payment_type", null: false # the payment is 'payment' or 'pass' based on what the user used to purchase this ticket
-      t.boolean "boarded", default: false
+      t.string "status", default: "pending" # goes from pending, confirmed, boarded, canceled
       t.timestamps
     end
     add_foreign_key( :tickets, :route_runs )

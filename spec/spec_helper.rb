@@ -3,6 +3,10 @@ def api_get(url, api_token=nil)
   ActiveSupport::JSON.decode(response.body)
 end
 
+def api_put(url, api_token=nil)
+  put url, nil, 'HTTP_ACCEPT' => "application/json"
+end
+
 require 'factory_girl'
 
 ENV["RAILS_ENV"] ||= 'test'

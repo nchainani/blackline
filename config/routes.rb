@@ -1,7 +1,13 @@
 Rails.application.routes.draw do
   resources :routes, only: [:index, :show] do
-    resources :route_runs, only: [:show]
+    resources :route_runs, only: [:show] do
+      member do
+        put 'reserve'
+      end
+    end
   end
+
+  resources :riders
 
   get '/status' => 'application#status'
   # The priority is based upon order of creation: first created -> highest priority.

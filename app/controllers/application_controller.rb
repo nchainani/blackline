@@ -8,4 +8,5 @@ class ApplicationController < ActionController::API
   end
 
   def render_404; render_error( 404, 'resource not found' ); end;
+  def render_422(message); render_error( 422, message || 'resource not found' ); end;
 end
