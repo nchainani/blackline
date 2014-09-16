@@ -7,14 +7,22 @@ class TicketsController < ApplicationController
     elsif route_run.nil?
       render_422("Route not found")
     else
-      ticket = Ticket.create_new_ticket!(route_run, rider, (pass || payment_details), location)
-      ticket.confirmed!
-      render json: ticket, root: false
+      new_ticket = Ticket.create_new_ticket!(route_run, rider, (pass || payment_details), location)
+      new_ticket.confirmed!
+      render json: new_ticket, root: false
     end
   rescue ActiveRecord::RecordInvalid => error
     render_410(error.message)
   rescue RuntimeError => error
     render_422(error.message)
+  end
+
+  def show
+    if ticket.nil?
+      render_404
+    else
+      render json: ticket, root: false
+    end
   end
 
   private
@@ -37,5 +45,9 @@ class TicketsController < ApplicationController
 
   def payment_details
     @payment_details ||= (PaymentDetail.where(id: params[:payment_detail_id], rider: rider).first if params[:payment_detail_id])
+  end
+
+  def ticket
+    @ticket ||= Ticket.where(id: params[:id], rider: rider).first
   end
 end

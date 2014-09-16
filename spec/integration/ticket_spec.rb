@@ -49,4 +49,21 @@ describe "Ticket creation" do
       response.status.should == 410
     end
   end
+
+  context "GET /tickets" do
+    let(:ticket) { FactoryGirl.create(:ticket, rider: rider) }
+    it "returns 404 if bad ticket" do
+      api_get "/tickets/123?rider_id=#{rider.id}"
+      response.status.should == 404
+    end
+    it "returns 404 if bad rider" do
+      api_get "/tickets/#{ticket.id}?rider_id=123"
+      response.status.should == 404
+    end
+    it "returns ticket" do
+      body = api_get "/tickets/#{ticket.id}?rider_id=#{rider.id}"
+      response.status.should == 200
+      body['id'].should == ticket.id
+    end
+  end
 end
