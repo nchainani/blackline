@@ -8,6 +8,7 @@ class TicketsController < ApplicationController
       render_422("Route not found")
     else
       ticket = Ticket.create_new_ticket!(route_run, rider, (pass || payment_details), location)
+      ticket.confirmed!
       render json: ticket, root: false
     end
   rescue ActiveRecord::RecordInvalid => error

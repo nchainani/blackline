@@ -23,7 +23,7 @@ class RouteRun < ActiveRecord::Base
   end
 
   def initialize_seats
-    self.total_tickets ||= bus.capacity
+    self.total_tickets = bus.capacity if self.total_tickets == 0
     self.remaining_tickets = self.total_tickets
   end
 
