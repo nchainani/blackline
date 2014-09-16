@@ -23,7 +23,7 @@ class CreateRiderTables < ActiveRecord::Migration
     create_table :passes do |t|
       t.integer "rider_id", null: false
       t.integer "payment_detail_id", null: false
-      t.integer "total_tickets", default: 0
+      t.integer "total_tickets"
       t.integer "remaining_tickets", default: 0
       t.datetime "purchase_date", null: false
       t.datetime "expiry_date"

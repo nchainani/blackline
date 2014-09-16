@@ -10,14 +10,12 @@ class Ticket < ActiveRecord::Base
   enumerize :status, in: STATUS_LIST
 
   def self.create_new_ticket!(route_run, rider, payment, location)
-    route_run.with_lock do
-      payment.with_lock do
-        payment.verify!
-        ticket = create!(rider: rider, payment: payment, location: location, route_run: route_run)
-        payment.reserve!(ticket)
-        route_run.reserve!(ticket)
-        ticket
-      end
+    payment.verify!
+    transaction do
+      ticket = create!(rider: rider, payment: payment, location: location, route_run: route_run)
+      payment.reserve!(ticket)
+      route_run.reserve!(ticket)
+      ticket
     end
   end
 

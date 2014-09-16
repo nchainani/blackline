@@ -16,7 +16,8 @@ class Pass < ActiveRecord::Base
   end
 
   def reserve!(ticket)
-    transaction do
+    with_lock do
+      reload
       self.remaining_tickets -= 1
       save!
     end

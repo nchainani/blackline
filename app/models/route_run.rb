@@ -8,7 +8,8 @@ class RouteRun < ActiveRecord::Base
   before_create :initialize_seats
 
   def reserve!(ticket)
-    transaction do
+    with_lock do
+      reload
       self.remaining_tickets -= 1
       save!
     end
@@ -23,7 +24,7 @@ class RouteRun < ActiveRecord::Base
   end
 
   def initialize_seats
-    self.total_tickets = bus.capacity if self.total_tickets == 0
+    self.total_tickets ||= bus.capacity
     self.remaining_tickets = self.total_tickets
   end
 
