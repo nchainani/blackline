@@ -12,7 +12,7 @@ class Pass < ActiveRecord::Base
   validate :validate_remaining_tickets
 
   def verify!
-    raise "Pass expired" if self.status == "complete" || self.remaining_seats <= 0
+    raise "Pass expired" if self.status == "complete" || self.remaining_tickets < 0
   end
 
   def reserve!(ticket)
@@ -24,10 +24,10 @@ class Pass < ActiveRecord::Base
 
   private
   def initialize_remaining_tickets
-    self.remaining_tickets ||= self.total_tickets
+    self.remaining_tickets = self.total_tickets
   end
 
   def validate_remaining_tickets
-    errors.add(:out_of_tickets, "No more tickets left on the pass")
+    errors.add(:out_of_tickets, "No more tickets left on the pass") if self.remaining_tickets < 0
   end
 end

@@ -4,39 +4,17 @@ class RouteRun < ActiveRecord::Base
   delegate :locations, to: :route
   has_many :tickets
 
-  validate :locations_and_times_match, :validate_total_seats
+  validate :locations_and_times_match, :validate_total_tickets, :validate_remaining_tickets
+  before_create :initialize_seats
 
-  before_create :initialize_total_seats
-
-  def reserve(rider, payment, location = nil)
-    make_reservation(rider, payment, location)
-  end
-
-  def remaining_seats
-    self.total_seats - tickets.where("status <> 'canceled'").count
+  def reserve!(ticket)
+    transaction do
+      self.remaining_tickets -= 1
+      save!
+    end
   end
 
   private
-
-  def make_reservation(rider, payment, location)
-    with_lock do
-      # this is split across two methods because I doubt in real world
-      # create_ticket will first happen and the ticket will be confirmed
-      # subsequently in a separate api call
-      # clients can use this two step ticket creation to call stripe in between
-      ticket = create_ticket(rider, payment, location)
-      ticket.confirmed!
-    end
-  end
-
-  def create_ticket(rider, payment, location)
-    payment.with_lock do
-      payment.verify!
-      ticket = Ticket.create!(rider: rider, payment: payment, location: location, route_run: self)
-      payment.reserve!(ticket)
-      ticket
-    end
-  end
 
   def locations_and_times_match
     if times.to_s.split(",").count != locations.count
@@ -44,11 +22,16 @@ class RouteRun < ActiveRecord::Base
     end
   end
 
-  def initialize_total_seats
-    self.total_seats ||= bus.capacity
+  def initialize_seats
+    self.total_tickets ||= bus.capacity
+    self.remaining_tickets = self.total_tickets
   end
 
-  def validate_total_seats
-    (self.total_seats || 0) <= bus.capacity
+  def validate_total_tickets
+    errors.add(:invalid_total_tickets, "More seats than bus capacity") if (self.total_tickets > bus.capacity)
+  end
+
+  def validate_remaining_tickets
+    errors.add(:out_of_seats, "No more seats left on this bus") if (self.remaining_tickets < 0)
   end
 end

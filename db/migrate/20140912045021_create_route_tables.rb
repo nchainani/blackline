@@ -30,7 +30,7 @@ class CreateRouteTables < ActiveRecord::Migration
 
     create_table :buses do |t|
       t.integer "capacity"
-      t.string "type"
+      t.string "bus_type"
       t.string "owner"
       t.string "registration_number"
       t.timestamps
@@ -41,7 +41,8 @@ class CreateRouteTables < ActiveRecord::Migration
       t.integer "bus_id", null: false
       t.datetime "run_datetime"
       t.string "times" # this needs to be broken down into its own table (run_datetime alone will not be enough)
-      t.integer "total_seats"
+      t.integer "total_tickets", default: 0
+      t.integer "remaining_tickets", default: 0
       t.timestamps
     end
 

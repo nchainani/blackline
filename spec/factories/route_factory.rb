@@ -18,7 +18,7 @@ FactoryGirl.define do
 
   factory :bus do
     capacity 60
-    type "Full Bus"
+    bus_type "Full Bus"
     owner "R n R Buses"
     registration_number "XY11ZA2"
   end
@@ -28,6 +28,6 @@ FactoryGirl.define do
     bus
     run_datetime 2.hours.from_now
     times "4.30p"
-    total_seats 60
+    total_tickets 60
   end
 end

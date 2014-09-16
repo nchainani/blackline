@@ -9,4 +9,5 @@ class ApplicationController < ActionController::API
 
   def render_404; render_error( 404, 'resource not found' ); end;
   def render_422(message); render_error( 422, message || 'resource not found' ); end;
+  def render_410(message); render_error( 410, message || 'resource gone' ); end;
 end

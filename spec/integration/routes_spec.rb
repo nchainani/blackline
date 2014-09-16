@@ -74,7 +74,7 @@ describe "Route Controller spec" do
 
   def verify_route_run(route_run_in_response, route_run)
     route_run_in_response['id'].should == route_run.id
-    route_run_in_response['remaining_seats'].should == route_run.total_seats - Ticket.where(route_run_id: route_run.id).count
+    route_run_in_response['remaining_tickets'].should == route_run.total_tickets - Ticket.where(route_run_id: route_run.id).count
     route_run_in_response['details'].count.should == route_run.locations.count
     route_run_in_response['details'].each_with_index do |detail, index|
       location = route_run.locations[index]
