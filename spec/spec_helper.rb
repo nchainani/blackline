@@ -5,6 +5,7 @@ end
 
 def api_post(url, api_token=nil)
   post url, nil, 'HTTP_ACCEPT' => "application/json"
+  ActiveSupport::JSON.decode(response.body)
 end
 
 require 'factory_girl'

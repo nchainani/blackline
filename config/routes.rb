@@ -5,7 +5,7 @@ Rails.application.routes.draw do
 
   resources :tickets, only: [:create, :show]
 
-  resources :passes, only: [:create]
+  resources :passes, only: [:create, :show]
 
   get '/status' => 'application#status'
   # The priority is based upon order of creation: first created -> highest priority.

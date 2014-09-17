@@ -5,22 +5,36 @@ class Pass < ActiveRecord::Base
   belongs_to :payment_detail
   has_many :tickets, as: :payment
 
-  STATUS_LIST = [:pending, :complete]
+  STATUS_LIST = [:pending, :confirmed, :complete, :canceled]
   enumerize :status, in: STATUS_LIST
 
-  before_create :initialize_remaining_tickets
   validate :validate_remaining_tickets
+  before_create :initialize_remaining_tickets
 
   def verify!
     raise "Pass expired" if self.status == "complete" || self.remaining_tickets < 0
+  end
+
+  def self.create_new_pass!(rider, payment_detail, total_tickets)
+    payment_detail.verify!
+    create!(rider: rider, payment_detail: payment_detail, total_tickets: total_tickets, purchase_date: Time.now)
   end
 
   def reserve!(ticket)
     with_lock do
       reload
       self.remaining_tickets -= 1
+      self.status = :complete
       save!
     end
+  end
+
+  def confirmed!
+    update_attributes!(status: :confirmed)
+  end
+
+  def canceled!
+    update_attributes!(status: :canceled)
   end
 
   private
