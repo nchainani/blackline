@@ -22,6 +22,10 @@ class TicketsController < ApplicationController
     render json: ticket, root: false
   end
 
+  def index
+    render json: rider.tickets, root: false
+  end
+
   private
 
   def rider

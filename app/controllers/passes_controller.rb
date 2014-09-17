@@ -18,6 +18,10 @@ class PassesController < ApplicationController
     render json: pass, root: false
   end
 
+  def index
+    render json: rider.passes, root: false
+  end
+
   private
 
   def rider

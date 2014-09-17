@@ -11,6 +11,7 @@ describe "Pass creation" do
       body['id'].should == Pass.last.id
       body['total_tickets'].should == 1
     end
+
     it "raises error if total_tickets not given on pass" do
       body = api_post "/passes?rider_id=#{rider.id}&payment_detail_id=#{payment.id}"
       response.status.should == 400
@@ -32,6 +33,20 @@ describe "Pass creation" do
       body = api_get "/passes/#{pass.id}?rider_id=#{rider.id}"
       response.status.should == 200
       body['id'].should == pass.id
+    end
+  end
+
+  context "GET /passes" do
+    let(:pass) { FactoryGirl.create(:pass, rider: rider)}
+    it "returns 404 if bad rider" do
+      api_get "/passes?rider_id=123"
+      response.status.should == 404
+    end
+    it "returns passes" do
+      pass
+      body = api_get "/passes?rider_id=#{rider.id}"
+      response.status.should == 200
+      body.size.should == 1
     end
   end
 end
