@@ -7,6 +7,8 @@ Rails.application.routes.draw do
 
   resources :passes, only: [:create, :show, :index]
 
+  resources :payment_details, only: [:create, :show, :index]
+
   get '/status' => 'application#status'
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
