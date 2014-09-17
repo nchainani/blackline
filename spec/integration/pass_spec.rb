@@ -3,13 +3,18 @@ require 'rails_helper'
 describe "Pass creation" do
   let(:rider) { FactoryGirl.create(:rider) }
   let(:payment) { FactoryGirl.create(:payment_detail, rider: rider) }
-  let(:pass) { FactoryGirl.create(:pass, rider: rider, total_tickets: 10) }
 
   context "POST /pass" do
     it "creates the pass using payment details" do
       body = api_post "/passes?rider_id=#{rider.id}&payment_detail_id=#{payment.id}&total_tickets=1"
       response.status.should == 200
       body['id'].should == Pass.last.id
+      body['total_tickets'].should == 1
+    end
+    it "raises error if total_tickets not given on pass" do
+      body = api_post "/passes?rider_id=#{rider.id}&payment_detail_id=#{payment.id}"
+      response.status.should == 400
+      body['error']['message'].should == "Mandatory attributes missing: [:total_tickets]"
     end
   end
 

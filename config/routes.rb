@@ -3,7 +3,7 @@ Rails.application.routes.draw do
     resources :route_runs, only: [:show]
   end
 
-  resources :tickets, only: [:create, :show]
+  resources :tickets, only: [:create, :show, :index]
 
   resources :passes, only: [:create, :show]
 

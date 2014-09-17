@@ -25,9 +25,9 @@ describe "Ticket creation" do
   end
 
   context "POST /ticket errors" do
-    it "422 for missing route_run or payment details" do
+    it "404 for missing route_run or payment details" do
       api_post "/tickets?route_run_id=#{route_run.id}"
-      response.status.should == 422
+      response.status.should == 404
     end
 
     it "inactive payment" do

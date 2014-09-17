@@ -1,11 +1,11 @@
 class PassesController < ApplicationController
+  before_filter :rider
+
   def create
     required_params(:total_tickets)
 
-    if rider.nil?
-      render_422("Rider not found")
-    elsif payment_details.nil?
-      render_422("Payment details not found")
+    if payment_details.nil?
+      render_404("Payment details not found")
     else
       new_pass = Pass.create_new_pass!(rider, payment_details, params[:total_tickets])
       new_pass.confirmed!
@@ -14,21 +14,14 @@ class PassesController < ApplicationController
   end
 
   def show
-    if pass.nil?
-      render_404
-    else
-      render json: pass, root: false
-    end
+    pass = rider.passes.find(params[:id])
+    render json: pass, root: false
   end
 
   private
 
   def rider
-    @rider ||= Rider.where(id: params[:rider_id]).first
-  end
-
-  def pass
-    @pass ||= Pass.where(id: params[:id], rider: rider).first
+    Rider.find(params[:rider_id])
   end
 
   def payment_details

@@ -4,6 +4,7 @@ class Rider < ActiveRecord::Base
   has_many :payment_details
   has_many :passes
   has_many :favorite_locations
+  has_many :tickets
 
   def password
     @password ||= Password.new(password_hash)

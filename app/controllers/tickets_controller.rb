@@ -1,11 +1,11 @@
 class TicketsController < ApplicationController
+  before_filter :rider
+
   def create
-    if rider.nil?
-      render_422("Rider not found")
-    elsif (pass.nil? && payment_details.nil?)
-      render_422("Payment details not found")
+    if (pass.nil? && payment_details.nil?)
+      render_404("Payment details not found")
     elsif route_run.nil?
-      render_422("Route not found")
+      render_404("Route not found")
     else
       new_ticket = Ticket.create_new_ticket!(route_run, rider, (pass || payment_details), location)
       new_ticket.confirmed!
@@ -18,21 +18,18 @@ class TicketsController < ApplicationController
   end
 
   def show
-    if ticket.nil?
-      render_404
-    else
-      render json: ticket, root: false
-    end
+    ticket = rider.tickets.find(params[:id])
+    render json: ticket, root: false
   end
 
   private
 
-  def route_run
-    @run ||= RouteRun.where(id: params[:route_run_id]).first
+  def rider
+    Rider.find(params[:rider_id])
   end
 
-  def rider
-    @rider ||= Rider.where(id: params[:rider_id]).first
+  def route_run
+    @run ||= RouteRun.where(id: params[:route_run_id]).first
   end
 
   def location
@@ -40,14 +37,10 @@ class TicketsController < ApplicationController
   end
 
   def pass
-    @pass ||= (Pass.where(id: params[:pass_id], rider: rider).first if params[:pass_id])
+    @pass ||= (rider.passes.where(id: params[:pass_id]).first if params[:pass_id])
   end
 
   def payment_details
-    @payment_details ||= (PaymentDetail.where(id: params[:payment_detail_id], rider: rider).first if params[:payment_detail_id])
-  end
-
-  def ticket
-    @ticket ||= Ticket.where(id: params[:id], rider: rider).first
+    @payment_details ||= (rider.payment_details.where(id: params[:payment_detail_id]).first if params[:payment_detail_id])
   end
 end

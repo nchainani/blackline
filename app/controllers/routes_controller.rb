@@ -6,11 +6,7 @@ class RoutesController < ApplicationController
   end
 
   def show
-    route = Route.where(id: params[:id]).first
-    if route.nil?
-      render_404
-    else
-      render json: route, root: false
-    end
+    route = Route.find(params[:id])
+    render json: route, root: false
   end
 end
