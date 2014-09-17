@@ -1,5 +1,7 @@
 class PassesController < ApplicationController
   def create
+    required_params(:total_tickets)
+
     if rider.nil?
       render_422("Rider not found")
     elsif payment_details.nil?

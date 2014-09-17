@@ -9,6 +9,7 @@ class Pass < ActiveRecord::Base
   enumerize :status, in: STATUS_LIST
 
   validate :validate_remaining_tickets
+  validates_presence_of :total_tickets
   before_create :initialize_remaining_tickets
 
   def verify!
