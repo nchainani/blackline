@@ -2,7 +2,9 @@ FactoryGirl.define do
   factory :rider do
     first_name "John"
     last_name "Doe"
-    email "john.doe@gmail.com"
+    sequence :email do |n|
+      "john.doe#{n}@example.com"
+    end
     password "test_password"
   end
 
@@ -14,7 +16,7 @@ FactoryGirl.define do
   end
 
   factory :pass do
-    rider
+    rider {FactoryGirl.create(:rider)}
     payment_detail
     total_tickets 10
     remaining_tickets 10

@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  devise_for :riders
   resources :routes, only: [:index, :show] do
     resources :route_runs, only: [:show]
   end
