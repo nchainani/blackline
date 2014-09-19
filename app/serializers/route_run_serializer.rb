@@ -6,8 +6,8 @@ class RouteRunSerializer < ActiveModel::Serializer
     array = []
     object.locations.each_with_index do |location, index|
       array << {
-        lat: location.latitude,
-        lng: location.longitude,
+        lat: location.lat,
+        lng: location.lng,
         id: location.id,
         name: location.name,
         time: times[index]

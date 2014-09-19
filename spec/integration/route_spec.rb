@@ -17,7 +17,7 @@ describe "Route Controller spec" do
 
     context "routes exist in the given radius around lat, lng" do
       it "returns the list of routes with their run times" do
-        body = api_get "/routes?lat=#{route.locations.first.latitude}&lng=#{route.locations.first.longitude}&radius=50"
+        body = api_get "/routes?lat=#{route.locations.first.lat}&lng=#{route.locations.first.lng}&radius=50"
         response.status.should == 200
         body.count.should == 1
         verify_route(body.first, route)
@@ -31,7 +31,7 @@ describe "Route Controller spec" do
         @old_route_run = FactoryGirl.create(:route_run, route: route, run_datetime: 10.days.ago)
       end
       it "returns the list of routes with their run times" do
-        body = api_get "/routes?lat=#{route.locations.first.latitude}&lng=#{route.locations.first.longitude}&radius=50"
+        body = api_get "/routes?lat=#{route.locations.first.lat}&lng=#{route.locations.first.lng}&radius=50"
         response.status.should == 200
         body.count.should == 1
         verify_route(body.first, route)
@@ -79,8 +79,8 @@ describe "Route Controller spec" do
     route_run_in_response['details'].each_with_index do |detail, index|
       location = route_run.locations[index]
       time = route_run.times.split(",")[index]
-      detail['lat'].should == location.latitude.to_s
-      detail['lat'].should == location.latitude.to_s
+      detail['lat'].should == location.lat.to_s
+      detail['lng'].should == location.lng.to_s
       detail['name'].should == location.name
       detail['time'].should == time
     end
