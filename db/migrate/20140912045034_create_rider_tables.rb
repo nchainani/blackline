@@ -8,6 +8,17 @@ class CreateRiderTables < ActiveRecord::Migration
       t.timestamps
     end
 
+    create_table :authorizations do |t|
+      t.string :provider
+      t.string :uid
+      t.integer :rider_id
+      t.string :token
+      t.string :secret
+
+      t.timestamps
+    end
+    add_foreign_key( :authorizations, :riders )
+
     create_table :payment_details do |t|
       t.integer "rider_id"
       t.string "number" # obscured string with only last 4 digits visible ***********4242
