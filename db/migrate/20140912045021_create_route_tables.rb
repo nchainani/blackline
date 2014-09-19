@@ -12,13 +12,13 @@ class CreateRouteTables < ActiveRecord::Migration
 
     create_table :locations do |t|
       t.string "name", null: false
-      t.decimal "latitude", null: false, precision: 12, scale: 9 # can live with precision: 11 but who cares
-      t.decimal "longitude", null: false, precision: 12, scale: 9
+      t.decimal "lat", null: false, precision: 12, scale: 9 # can live with precision: 11 but who cares
+      t.decimal "lng", null: false, precision: 12, scale: 9
       t.string "direction", null: false
       t.timestamps
     end
-    add_index(:locations, [:latitude, :longitude], unique: true)
-    add_index(:locations, [:longitude, :latitude], unique: true)
+    add_index(:locations, [:lat, :lng], unique: true)
+    add_index(:locations, [:lng, :lat], unique: true)
 
     create_table :locations_routes do |t|
       t.integer "route_id"

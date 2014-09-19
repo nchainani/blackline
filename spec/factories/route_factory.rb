@@ -11,8 +11,8 @@ FactoryGirl.define do
 
   factory :location do
     name "Braun Alley, Chicago, IL 60606, USA"
-    latitude "41.8871768"
-    longitude "-87.6406068"
+    lat "41.8871768"
+    lng "-87.6406068"
     direction "East"
   end
 

@@ -1,5 +1,6 @@
 class Location < ActiveRecord::Base
   has_and_belongs_to_many :routes
+  acts_as_mappable distance_field_name: :distance
 
   # returns locations in the given radius
   scope :nearby_stops, lambda { |lat, lng, radius|
