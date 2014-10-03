@@ -28,7 +28,7 @@ class Directions
       {
         name: route['summary'],
         polyline: route['overview_polyline']['points'],
-        complex_polyline: leg['steps'].map {|step| step['polyline']['points']}.join(""),
+        #complex_polyline: leg['steps'].map {|step| step['polyline']['points']}.join(""),
         box: [ p2a(route['bounds']['northeast']), p2a(route['bounds']['southwest']) ],
         origin: p2a(leg['start_location']),
         destination: p2a(leg['end_location']),

@@ -1,14 +1,17 @@
 Rails.application.routes.draw do
-  resources :routes, only: [:index, :show] do
-    resources :route_runs, only: [:show]
+  scope "/api" do
+    scope "/v1" do
+      resources :routes, only: [:index, :show] do
+        resources :route_runs, only: [:show]
+      end
+
+      resources :tickets, only: [:create, :show, :index]
+
+      resources :passes, only: [:create, :show, :index]
+
+      resources :payment_details, only: [:create, :show, :index]
+    end
   end
-
-  resources :tickets, only: [:create, :show, :index]
-
-  resources :passes, only: [:create, :show, :index]
-
-  resources :payment_details, only: [:create, :show, :index]
-
   get '/status' => 'application#status'
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

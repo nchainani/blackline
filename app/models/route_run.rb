@@ -29,7 +29,7 @@ class RouteRun < ActiveRecord::Base
   end
 
   def validate_total_tickets
-    errors.add(:invalid_total_tickets, "More seats than bus capacity") if (self.total_tickets > bus.capacity)
+    errors.add(:invalid_total_tickets, "More seats than bus capacity") if self.total_tickets && (self.total_tickets > bus.capacity)
   end
 
   def validate_remaining_tickets
