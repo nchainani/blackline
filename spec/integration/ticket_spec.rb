@@ -75,7 +75,7 @@ describe "Ticket creation" do
     end
     it "returns tickets" do
       ticket
-      body = api_get "/tickets?rider_id=#{rider.id}"
+      body = api_get "/tickets?rider_id=#{rider.id}&status=#{ticket.status}"
       response.status.should == 200
       body.size.should == 1
     end
