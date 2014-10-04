@@ -1,10 +1,10 @@
 FactoryGirl.define do
   factory :route do
     name "Lincoln Park"
-    description "Navy Pier - Lincoln Park Express"
+    description "Navy Pier - Lincoln Park"
     number 66
     direction "East"
-    polyline "{cu~F`|wuOAgA~CEBbE@vDAzBFhNBlF@|@BpFHpNFfS@rGyFLqHF{LFoWV_OLqOLkTV_SHqAAKAQKIIGSCM[PeFlC_Bx@_JtEMF"
+    polyline "{cu~F`|wuOMsTCIKIU?[Fm@Zo@`@{C~A{ChBaDdBuFfDuBtA_N|HyBlAa@\\O^Ad@XzU@j@qAYmB]y@Qm@Gk@@gALs@PwAj@kAb@}@PiDp@y@TQLm@LeDn@}GfAkEn@}BN_JN}@BeALkDdAQHuMhFoIhDqIlCcHpAwFv@oRbEs@OcB?uB@a@@]HN~A@FDb@h@zFD`@`@vG@zF?tBfA[d@KjAGD?"
     active true
     locations {[create(:location)]}
   end
