@@ -27,7 +27,8 @@ class TicketsController < ApplicationController
   def index
     arel = rider.tickets
     if params[:datetime]
-      arel = arel.joins(:route_run).merge(RouteRun.where("run_datetime > '#{params[:datetime]}'"))
+      sign = (params[:past] == true ? "<" : ">")
+      arel = arel.joins(:route_run).merge(RouteRun.where("run_datetime #{sign} '#{params[:datetime]}'"))
     end
     render json: arel, root: false
   end
