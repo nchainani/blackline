@@ -12,6 +12,8 @@ gem 'active_model_serializers', "0.8.1"
 gem 'enumerize'
 gem 'httparty'
 gem 'awesome_print'
+gem 'stripe'
+gem "rails_config"
 
 gem 'factory_girl_rails'
 

@@ -11,12 +11,16 @@ class PaymentDetail < ActiveRecord::Base
   end
 
   def reserve!(ticket)
-    # noop
+    Stripe::Charge.create(
+      amount: ticket.amount,
+      currency: "usd",
+      customer: customer_id
+    )
   end
 
   private
 
   def obscure_number
-    self.number = self.number.to_s.gsub(/.(?!.{0,3}$)/,'*')
+    self.last4 = self.last4.to_s.gsub(/.(?!.{0,3}$)/,'*')
   end
 end

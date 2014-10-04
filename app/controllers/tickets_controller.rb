@@ -2,12 +2,14 @@ class TicketsController < ApplicationController
   before_filter :rider
 
   def create
+    required_params(:amount)
+
     if (pass.nil? && payment_details.nil?)
       render_404("Payment details not found")
     elsif route_run.nil?
       render_404("Route not found")
     else
-      new_ticket = Ticket.create_new_ticket!(route_run, rider, (pass || payment_details), location)
+      new_ticket = Ticket.create_new_ticket!(route_run, rider, (pass || payment_details), location, params[:amount])
       new_ticket.confirmed!
       render json: new_ticket, root: false
     end

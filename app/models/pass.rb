@@ -13,12 +13,20 @@ class Pass < ActiveRecord::Base
   before_create :initialize_remaining_tickets
 
   def verify!
-    raise "Pass expired" if self.status == "complete" || self.remaining_tickets < 0
+    raise "Pass expired" if self.status == "complete" || self.remaining_tickets < 0 || (self.expiry_date && self.expiry_date < Time.now)
   end
 
-  def self.create_new_pass!(rider, payment_detail, total_tickets)
+  def self.create_new_pass!(rider, payment_detail, total_tickets, amount)
     payment_detail.verify!
-    create!(rider: rider, payment_detail: payment_detail, total_tickets: total_tickets, purchase_date: Time.now)
+    transaction do
+      pass = create!(rider: rider, payment_detail: payment_detail, total_tickets: total_tickets, purchase_date: Time.now, amount: amount)
+      Stripe::Charge.create(
+        amount: amount,
+        currency: "usd",
+        customer: payment_detail.customer_id
+      )
+      pass
+    end
   end
 
   def reserve!(ticket)

@@ -1,3 +1,3 @@
 class PaymentDetailSerializer < ActiveModel::Serializer
-  attributes :id, :active, :number, :token
+  attributes :id, :active, :last4, :card_type, :token
 end

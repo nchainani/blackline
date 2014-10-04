@@ -13,8 +13,10 @@ class CreateRiderTables < ActiveRecord::Migration
 
     create_table :payment_details do |t|
       t.integer "rider_id"
-      t.string "number" # obscured string with only last 4 digits visible ***********4242
+      t.string "card_type"
+      t.string "last4" # obscured string with only last 4 digits visible ***********4242
       t.string "token" # think of encrypting this as well
+      t.string "customer_id" # think of encrypting this as well
       t.boolean "active", default: true
       t.timestamps
     end
@@ -27,6 +29,7 @@ class CreateRiderTables < ActiveRecord::Migration
       t.integer "remaining_tickets", default: 0
       t.datetime "purchase_date", null: false
       t.datetime "expiry_date"
+      t.decimal "amount", default: 0
       t.string "status", default: "pending" # goes from pending to complete
       t.timestamps
     end
@@ -40,6 +43,7 @@ class CreateRiderTables < ActiveRecord::Migration
       t.integer "payment_id", null: false
       t.string "payment_type", null: false # the payment is 'payment' or 'pass' based on what the user used to purchase this ticket
       t.string "status", default: "pending" # goes from pending, confirmed, boarded, canceled
+      t.decimal "amount", default: 0
       t.timestamps
     end
     add_foreign_key( :tickets, :route_runs )

@@ -1,5 +1,5 @@
 class RouteSerializer < ActiveModel::Serializer
-  attributes :id, :direction, :description, :polyline, :runs
+  attributes :id, :name, :direction, :description, :polyline, :runs
 
   def runs
     object.immediate_runs.map do |run|

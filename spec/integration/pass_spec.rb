@@ -6,7 +6,7 @@ describe "Pass creation" do
 
   context "POST /pass" do
     it "creates the pass using payment details" do
-      body = api_post "/passes?rider_id=#{rider.id}&payment_detail_id=#{payment.id}&total_tickets=1"
+      body = api_post "/passes?rider_id=#{rider.id}&payment_detail_id=#{payment.id}&total_tickets=1&amount=2399"
       response.status.should == 200
       body['id'].should == Pass.last.id
       body['total_tickets'].should == 1
@@ -15,7 +15,7 @@ describe "Pass creation" do
     it "raises error if total_tickets not given on pass" do
       body = api_post "/passes?rider_id=#{rider.id}&payment_detail_id=#{payment.id}"
       response.status.should == 400
-      body['error']['message'].should == "Mandatory attributes missing: [:total_tickets]"
+      body['error']['message'].should == "Mandatory attributes missing: [:total_tickets, :amount]"
     end
   end
 
