@@ -1,5 +1,5 @@
 class RouteRunSerializer < ActiveModel::Serializer
-  attributes :id, :remaining_tickets, :run_datetime, :details
+  attributes :id, :remaining_tickets, :run_datetime, :details, :bus
 
   def details
     times = object.times.split(",")
@@ -15,5 +15,9 @@ class RouteRunSerializer < ActiveModel::Serializer
       }
     end
     array
+  end
+
+  def bus
+    BusSerializer.new(object.bus)
   end
 end

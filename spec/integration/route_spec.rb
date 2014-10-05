@@ -84,5 +84,10 @@ describe "Route Controller spec" do
       detail['name'].should == location.name
       detail['time'].should == time
     end
+    bus = route_run_in_response['bus']
+    bus['id'] = route_run.bus.id
+    bus['capacity'] = route_run.bus.capacity
+    bus['bus_type'] = route_run.bus.bus_type
+    bus['registration_number'] = route_run.bus.registration_number
   end
 end
