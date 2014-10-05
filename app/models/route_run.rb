@@ -15,6 +15,10 @@ class RouteRun < ActiveRecord::Base
     end
   end
 
+  def time_at_location(location)
+    times.to_s.split(",")[locations.find_index(location)]
+  end
+
   private
 
   def locations_and_times_match
