@@ -33,7 +33,7 @@ class Pass < ActiveRecord::Base
     with_lock do
       reload
       self.remaining_tickets -= 1
-      self.status = :complete
+      self.status = :complete if self.remaining_tickets == 0
       save!
     end
   end

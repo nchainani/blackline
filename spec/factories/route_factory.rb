@@ -1,6 +1,6 @@
 FactoryGirl.define do
   factory :route do
-    name "Lincoln Park"
+    name "Lincoln Park Express"
     description "Navy Pier - Lincoln Park"
     number 66
     direction "East"
