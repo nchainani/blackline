@@ -9,6 +9,7 @@ describe "Ticket creation" do
   context "POST /tickets" do
     it "makes the reservation using payment details" do
       available_seats = route_run.remaining_tickets
+      Stripe::Charge.should_receive(:create).with({ amount: 199, currency: "usd", customer: payment.customer_id })
       api_post "/tickets?route_run_id=#{route_run.id}&rider_id=#{rider.id}&payment_detail_id=#{payment.id}&amount=199"
       response.status.should == 200
       route_run.reload.remaining_tickets.should == available_seats - 1
@@ -17,10 +18,19 @@ describe "Ticket creation" do
     it "makes the reservation using pass" do
       available_tickets = pass.remaining_tickets
       available_seats = route_run.remaining_tickets
+      Stripe::Charge.should_not_receive(:create)
       api_post "/tickets?route_run_id=#{route_run.id}&rider_id=#{rider.id}&pass_id=#{pass.id}&amount=199"
       response.status.should == 200
       route_run.reload.remaining_tickets.should == available_seats - 1
       pass.reload.remaining_tickets.should == available_tickets - 1
+      pass.status.should_not == :complete
+    end
+
+    it "marks the pass as complete when remaining_tickets are down to 0" do
+      pass.update_attributes!(remaining_tickets: 1)
+      api_post "/tickets?route_run_id=#{route_run.id}&rider_id=#{rider.id}&pass_id=#{pass.id}&amount=199"
+      response.status.should == 200
+      pass.reload.status.should == "complete"
     end
   end
 

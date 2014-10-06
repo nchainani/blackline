@@ -70,6 +70,8 @@ describe "Route Controller spec" do
     route_in_response['direction'].should == route.direction
     route_in_response['description'].should == route.description
     route_in_response['polyline'].should == route.polyline
+    route_in_response['locations'].count == route.locations.count
+    route_in_response['locations'].map {|l| l['id']}.should == route.locations.map(&:id)
   end
 
   def verify_route_run(route_run_in_response, route_run)
