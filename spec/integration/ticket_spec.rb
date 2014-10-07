@@ -18,7 +18,7 @@ describe "Ticket creation" do
     it "makes the reservation using pass" do
       available_tickets = pass.remaining_tickets
       available_seats = route_run.remaining_tickets
-      Stripe::Charge.should_not_receive(:create)
+      expect(Stripe::Charge).to_not receive(:create)
       api_post "/tickets?route_run_id=#{route_run.id}&rider_id=#{rider.id}&pass_id=#{pass.id}&amount=199"
       response.status.should == 200
       route_run.reload.remaining_tickets.should == available_seats - 1
