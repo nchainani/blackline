@@ -14,11 +14,20 @@ FactoryGirl.define do
     active true
   end
 
+  factory :pass_plan do
+    name "Buy 10 tickets for 20.99"
+    amount 20.99
+    currency "USD"
+  end
+
   factory :pass do
     rider
     payment_detail
+    pass_plan
     total_tickets 10
     remaining_tickets 10
+    amount 10.99
+    currency "USD"
     purchase_date Date.today
     expiry_date 1.year.from_now
   end
@@ -34,6 +43,7 @@ FactoryGirl.define do
   factory :ticket do
     rider
     route_run
+    amount 5.99
     payment {create(:payment_detail)}
   end
 

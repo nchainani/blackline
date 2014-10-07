@@ -10,6 +10,8 @@ Rails.application.routes.draw do
       resources :passes, only: [:create, :show, :index]
 
       resources :payment_details, only: [:create, :show, :index]
+
+      resources :pass_plans, only: [:show, :index]
     end
   end
   get '/status' => 'application#status'

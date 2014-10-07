@@ -3,6 +3,7 @@ class Pass < ActiveRecord::Base
 
   belongs_to :rider
   belongs_to :payment_detail
+  belongs_to :pass_plan
   has_many :tickets, as: :payment
 
   STATUS_LIST = [:pending, :confirmed, :complete, :canceled]

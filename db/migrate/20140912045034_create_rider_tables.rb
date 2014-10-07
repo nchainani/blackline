@@ -22,6 +22,14 @@ class CreateRiderTables < ActiveRecord::Migration
     end
     add_foreign_key( :payment_details, :riders )
 
+    create_table :pass_plans do |t|
+      t.string "name", null: false
+      t.decimal "amount", precision: 10, scale: 2
+      t.string "currency", default: "USD"
+      t.boolean "active", default: true
+      t.timestamps
+    end
+
     create_table :passes do |t|
       t.integer "rider_id", null: false
       t.integer "payment_detail_id", null: false
@@ -29,12 +37,15 @@ class CreateRiderTables < ActiveRecord::Migration
       t.integer "remaining_tickets", default: 0
       t.datetime "purchase_date", null: false
       t.datetime "expiry_date"
-      t.decimal "amount", default: 0
+      t.decimal "amount", precision: 10, scale: 2
+      t.string "currency", default: "USD"
+      t.integer "pass_plan_id"
       t.string "status", default: "pending" # goes from pending to complete
       t.timestamps
     end
     add_foreign_key( :passes, :riders )
     add_foreign_key( :passes, :payment_details)
+    add_foreign_key( :passes, :pass_plans )
 
     create_table :tickets do |t|
       t.integer "route_run_id", null: false
@@ -43,7 +54,8 @@ class CreateRiderTables < ActiveRecord::Migration
       t.integer "payment_id", null: false
       t.string "payment_type", null: false # the payment is 'payment' or 'pass' based on what the user used to purchase this ticket
       t.string "status", default: "pending" # goes from pending, confirmed, boarded, canceled
-      t.decimal "amount", default: 0
+      t.decimal "amount", precision: 10, scale: 2
+      t.string "currency", default: "USD"
       t.timestamps
     end
     add_foreign_key( :tickets, :route_runs )
