@@ -24,6 +24,7 @@ class CreateRiderTables < ActiveRecord::Migration
 
     create_table :pass_plans do |t|
       t.string "name", null: false
+      t.string "description", null: false
       t.decimal "amount", precision: 10, scale: 2
       t.string "currency", default: "USD"
       t.boolean "active", default: true
@@ -39,7 +40,7 @@ class CreateRiderTables < ActiveRecord::Migration
       t.datetime "expiry_date"
       t.decimal "amount", precision: 10, scale: 2
       t.string "currency", default: "USD"
-      t.integer "pass_plan_id"
+      t.integer "pass_plan_id", null: false
       t.string "status", default: "pending" # goes from pending to complete
       t.timestamps
     end

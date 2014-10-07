@@ -15,7 +15,8 @@ FactoryGirl.define do
   end
 
   factory :pass_plan do
-    name "Buy 10 tickets for 20.99"
+    name "10 tickets for 20.99"
+    description "Buy 10 tickets for 20.99"
     amount 20.99
     currency "USD"
   end

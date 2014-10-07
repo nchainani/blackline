@@ -1,3 +1,3 @@
 class PassPlanSerializer < ActiveModel::Serializer
-  attributes :id, :name, :amount, :currency
+  attributes :id, :name, :description, :amount, :currency
 end

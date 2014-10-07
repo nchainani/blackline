@@ -7,7 +7,7 @@ class PassesController < ApplicationController
     if payment_details.nil?
       render_404("Payment details not found")
     else
-      new_pass = Pass.create_new_pass!(rider, payment_details, params[:total_tickets], params[:amount])
+      new_pass = Pass.create_new_pass!(rider, payment_details, pass_plan, params[:total_tickets], params[:amount])
       new_pass.confirmed!
       render json: new_pass, root: false
     end
@@ -30,5 +30,9 @@ class PassesController < ApplicationController
 
   def payment_details
     @payment_details ||= (PaymentDetail.where(id: params[:payment_detail_id], rider: rider).first if params[:payment_detail_id])
+  end
+
+  def pass_plan
+    @pass_plan ||= PassPlan.where(id: params[:pass_plan_id]).first
   end
 end

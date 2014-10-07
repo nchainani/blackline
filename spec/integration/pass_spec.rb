@@ -3,11 +3,12 @@ require 'rails_helper'
 describe "Pass creation" do
   let(:rider) { FactoryGirl.create(:rider) }
   let(:payment) { FactoryGirl.create(:payment_detail, rider: rider) }
+  let(:pass_plan) { FactoryGirl.create(:pass_plan) }
 
   context "POST /pass" do
     it "creates the pass using payment details" do
       Stripe::Charge.should_receive(:create).with({ amount: "2399", currency: "usd", customer: payment.customer_id })
-      body = api_post "/passes?rider_id=#{rider.id}&payment_detail_id=#{payment.id}&total_tickets=1&amount=2399"
+      body = api_post "/passes?rider_id=#{rider.id}&payment_detail_id=#{payment.id}&total_tickets=1&amount=2399&pass_plan_id=#{pass_plan.id}"
       response.status.should == 200
       body['id'].should == Pass.last.id
       body['total_tickets'].should == 1
