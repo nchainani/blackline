@@ -5,7 +5,7 @@ describe "Payment detail creation" do
 
   context "POST /payment_details" do
     it "creates the payment detail" do
-      Stripe::Customer.should_receive(:create).with(card: "tknsadf234234234", description: rider.email).and_return(double('stripe customer', id: "cus_1242323"))
+      expect(Stripe::Customer).to receive(:create).with(card: "tknsadf234234234", description: rider.email).and_return(double('stripe customer', id: "cus_1242323"))
       body = api_post "/payment_details?rider_id=#{rider.id}&last4=1234&card_type=MASTER_CARD&token=tknsadf234234234"
       response.status.should == 200
       rider.payment_details.count.should == 1

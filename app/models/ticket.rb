@@ -13,8 +13,8 @@ class Ticket < ActiveRecord::Base
     payment.verify!
     transaction do
       ticket = create!(rider: rider, payment: payment, location: location, route_run: route_run, amount: amount)
-      payment.reserve!(ticket)
       route_run.reserve!(ticket)
+      payment.reserve!(ticket)
       ticket
     end
   end
