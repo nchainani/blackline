@@ -78,6 +78,8 @@ describe "Route Controller spec" do
     route_run_in_response['id'].should == route_run.id
     route_run_in_response['remaining_tickets'].should == route_run.total_tickets - Ticket.where(route_run_id: route_run.id).count
     route_run_in_response['details'].count.should == route_run.locations.count
+    route_run_in_response['currency'].should == "USD"
+    route_run_in_response['amount'].should == "5.99"
     route_run_in_response['details'].each_with_index do |detail, index|
       location = route_run.locations[index]
       time = route_run.times.split(",")[index]

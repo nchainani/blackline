@@ -29,5 +29,7 @@ FactoryGirl.define do
     run_datetime 2.hours.from_now
     times "4.30p"
     total_tickets 60
+    amount 5.99
+    currency "USD"
   end
 end
