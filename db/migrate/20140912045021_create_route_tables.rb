@@ -43,7 +43,7 @@ class CreateRouteTables < ActiveRecord::Migration
       t.string "times" # this needs to be broken down into its own table (run_datetime alone will not be enough)
       t.integer "total_tickets"
       t.integer "remaining_tickets", default: 0
-      t.decimal "amount", precision: 10, scale: 2
+      t.integer "amount"
       t.string "currency", default: "USD"
       t.timestamps
     end

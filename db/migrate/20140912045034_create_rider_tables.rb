@@ -25,8 +25,9 @@ class CreateRiderTables < ActiveRecord::Migration
     create_table :pass_plans do |t|
       t.string "name", null: false
       t.string "description", null: false
-      t.decimal "amount", precision: 10, scale: 2
+      t.integer "amount"
       t.string "currency", default: "USD"
+      t.integer "total_tickets", default: 0
       t.boolean "active", default: true
       t.timestamps
     end
@@ -38,7 +39,7 @@ class CreateRiderTables < ActiveRecord::Migration
       t.integer "remaining_tickets", default: 0
       t.datetime "purchase_date", null: false
       t.datetime "expiry_date"
-      t.decimal "amount", precision: 10, scale: 2
+      t.integer "amount"
       t.string "currency", default: "USD"
       t.integer "pass_plan_id", null: false
       t.string "status", default: "pending" # goes from pending to complete
@@ -55,7 +56,7 @@ class CreateRiderTables < ActiveRecord::Migration
       t.integer "payment_id", null: false
       t.string "payment_type", null: false # the payment is 'payment' or 'pass' based on what the user used to purchase this ticket
       t.string "status", default: "pending" # goes from pending, confirmed, boarded, canceled
-      t.decimal "amount", precision: 10, scale: 2
+      t.integer "amount"
       t.string "currency", default: "USD"
       t.timestamps
     end
