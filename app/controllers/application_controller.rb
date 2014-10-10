@@ -10,7 +10,7 @@ class ApplicationController < ActionController::API
   end
 
   def render_error( http_code, message )
-    render :status => http_code, :json => { :error => {:httpCode => http_code, :message => message } }
+    render status: http_code, json: { error: { httpCode: http_code, message: message } }
   end
 
   def render_404(message=nil); render_error( 404, message || 'resource not found' ); end;
@@ -31,4 +31,7 @@ class ApplicationController < ActionController::API
     raise MissingAttributesError.new(missing_params) unless missing_params.empty? 
   end
 
+  def rider
+    env['BLACKLINE_RIDER']
+  end
 end

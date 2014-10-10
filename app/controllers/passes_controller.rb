@@ -24,10 +24,6 @@ class PassesController < ApplicationController
 
   private
 
-  def rider
-    Rider.find(params[:rider_id])
-  end
-
   def payment_details
     @payment_details ||= (PaymentDetail.where(id: params[:payment_detail_id], rider: rider).first if params[:payment_detail_id])
   end

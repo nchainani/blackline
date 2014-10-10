@@ -35,10 +35,6 @@ class TicketsController < ApplicationController
 
   private
 
-  def rider
-    Rider.find(params[:rider_id])
-  end
-
   def route_run
     @run ||= RouteRun.where(id: params[:route_run_id]).first
   end

@@ -19,10 +19,4 @@ class PaymentDetailsController < ApplicationController
   def index
     render json: rider.payment_details, root: false
   end
-
-  private
-
-  def rider
-    Rider.find(params[:rider_id])
-  end
 end

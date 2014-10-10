@@ -1,34 +1,51 @@
 module Middlewares
+  class UserNotFound < StandardError
+  end
+
   class LoginAuth
     def initialize( app )
       @app = app
     end
 
     def call(env)
-      request = Rack::Request.new env
-      if (rider_params = request.params['rider'])
-        auth = setup_rider(rider_params)
-        if auth
-          env['RIDER_ID'] = auth.rider_id
-        end
+      if Rails.env.to_sym == :test
+        setup_rider_test(env)
+      else
+        setup_rider(env)
       end
       @app.call(env)
+    rescue UserNotFound, ActiveRecord::RecordNotFound => e
+      [ 404, {"Content-Type"=>"application/json"}, { error: { httpCode: 404, message: "user not found" }}.to_json]
     end
 
     private
 
-    def setup_rider(rider_params)
+    def setup_rider(env)
+      request = Rack::Request.new env
+      if (rider_params = request.params['rider'])
+        auth = check_3rd_party(rider_params)
+        if auth
+          env['BLACKLINE_RIDER'] = auth.rider
+          env['BLACKLINE_RIDER_AUTH'] = auth
+        end
+      end
+    end
+
+    def check_3rd_party(rider_params)
       auth = case rider_params['provider']
       when "facebook"
-        if (rider = authenticate_facebook(rider_params['token']))
+        if (rider = authenticate_facebook!(rider_params['token']))
           authenticate!(rider_params.merge(rider))
         end
       end
     end
 
-    def authenticate_facebook(token)
+    def authenticate_facebook!(token)
       response = HTTParty.get("https://graph.facebook.com/me", { query: { access_token: token }})
       body = JSON.parse(response.body)
+      if body["error"]
+        raise UserNotFound
+      end
       body
     end
 
@@ -44,5 +61,11 @@ module Middlewares
       authentication
     end
 
+    def setup_rider_test(env)
+      request = Rack::Request.new env
+      params = request.params
+      env['BLACKLINE_RIDER'] = Rider.find(params['rider_id']) if params['rider_id']
+      env['BLACKLINE_RIDER_AUTH'] = Authorization.find(params['auth_id']) if params['auth_id']
+    end
   end
 end

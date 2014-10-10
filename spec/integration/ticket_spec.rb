@@ -36,7 +36,7 @@ describe "Ticket creation" do
 
   context "POST /ticket errors" do
     it "404 for missing route_run or payment details" do
-      api_post "/tickets?route_run_id=#{route_run.id}"
+      api_post "/tickets?route_run_id=#{route_run.id}&rider_id=#{rider.id}&amount=199"
       response.status.should == 404
     end
 

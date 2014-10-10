@@ -1,10 +1,10 @@
-def api_get(url, api_token=nil)
-  get "/api/v1/#{url}", nil, 'HTTP_ACCEPT' => "application/json"
+def api_get(url, body = nil, api_token=nil)
+  get "/api/v1/#{url}", body, 'HTTP_ACCEPT' => "application/json"
   ActiveSupport::JSON.decode(response.body)
 end
 
-def api_post(url, api_token=nil)
-  post "/api/v1/#{url}", nil, 'HTTP_ACCEPT' => "application/json"
+def api_post(url, body = nil, api_token=nil)
+  post "/api/v1/#{url}", body, 'HTTP_ACCEPT' => "application/json"
   ActiveSupport::JSON.decode(response.body)
 end
 
