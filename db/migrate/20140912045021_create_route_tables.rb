@@ -5,7 +5,7 @@ class CreateRouteTables < ActiveRecord::Migration
       t.string "description"
       t.integer "number"
       t.string "direction", null: false
-      t.string "polyline", null: false, length: 1000 # the line on map that describes this route
+      t.string "polyline", null: false, limit: 10000 # the line on map that describes this route
       t.boolean "active", default: true
       t.timestamps
     end
