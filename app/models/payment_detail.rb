@@ -11,11 +11,23 @@ class PaymentDetail < ActiveRecord::Base
   end
 
   def reserve!(ticket)
-    Stripe::Charge.create(
-      amount: ticket.amount,
-      currency: "usd",
+    # reserve is a noop
+  end
+
+  def charge_card!(object)
+    charge = Stripe::Charge.create(
+      amount: object.amount,
+      currency: object.currency,
       customer: customer_id
     )
+    charge
+  end
+
+  def object_canceled!(object)
+    if object.confirmation_id
+      charge = Stripe::Charge.retrieve(object.confirmation_id)
+      charge.refund
+    end
   end
 
   private

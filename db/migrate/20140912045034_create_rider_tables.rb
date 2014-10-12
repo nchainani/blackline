@@ -43,6 +43,7 @@ class CreateRiderTables < ActiveRecord::Migration
       t.string "currency", default: "USD"
       t.integer "pass_plan_id", null: false
       t.string "status", default: "pending" # goes from pending to complete
+      t.string "confirmation_id"
       t.timestamps
     end
     add_foreign_key( :passes, :riders )
@@ -58,6 +59,7 @@ class CreateRiderTables < ActiveRecord::Migration
       t.string "status", default: "pending" # goes from pending, confirmed, boarded, canceled
       t.integer "amount"
       t.string "currency", default: "USD"
+      t.string "confirmation_id"
       t.timestamps
     end
     add_foreign_key( :tickets, :route_runs )

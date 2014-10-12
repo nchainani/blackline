@@ -9,7 +9,7 @@ describe "Ticket creation" do
   context "POST /tickets" do
     it "makes the reservation using payment details" do
       available_seats = route_run.remaining_tickets
-      expect(Stripe::Charge).to receive(:create).with({ amount: 199, currency: "usd", customer: payment.customer_id })
+      expect(Stripe::Charge).to receive(:create).with({ amount: 199, currency: "USD", customer: payment.customer_id })
       api_post "/tickets?route_run_id=#{route_run.id}&rider_id=#{rider.id}&payment_detail_id=#{payment.id}&amount=199"
       response.status.should == 200
       route_run.reload.remaining_tickets.should == available_seats - 1

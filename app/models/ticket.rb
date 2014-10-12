@@ -13,17 +13,22 @@ class Ticket < ActiveRecord::Base
     payment.verify!
     transaction do
       ticket = create!(rider: rider, payment: payment, location: location, route_run: route_run, amount: amount)
-      route_run.reserve!(ticket)
       payment.reserve!(ticket)
+      route_run.reserve!(ticket)
       ticket
     end
   end
 
   def confirmed!
-    update_attributes!(status: :confirmed)
+    with_lock do
+      charge = payment.charge_card!(self)
+      update_attributes!(status: :confirmed, confirmation_id: charge.try(:id))
+    end
   end
 
   def canceled!
+    payment.object_canceled!(self)
+    route_run.ticket_canceled!(self)
     update_attributes!(status: :canceled)
   end
 end

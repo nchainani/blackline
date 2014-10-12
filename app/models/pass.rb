@@ -19,15 +19,7 @@ class Pass < ActiveRecord::Base
 
   def self.create_new_pass!(rider, payment_detail, pass_plan, total_tickets, amount)
     payment_detail.verify!
-    transaction do
-      pass = create!(rider: rider, payment_detail: payment_detail, pass_plan: pass_plan, total_tickets: total_tickets, purchase_date: Time.now, amount: amount)
-      Stripe::Charge.create(
-        amount: amount,
-        currency: "usd",
-        customer: payment_detail.customer_id
-      )
-      pass
-    end
+    create!(rider: rider, payment_detail: payment_detail, pass_plan: pass_plan, total_tickets: total_tickets, purchase_date: Time.now, amount: amount)
   end
 
   def reserve!(ticket)
@@ -39,11 +31,28 @@ class Pass < ActiveRecord::Base
     end
   end
 
+  def charge_card!(object)
+    # noop
+  end
+
+  def object_canceled!(object)
+    with_lock do
+      reload
+      self.remaining_tickets += 1
+      self.status = :confirmed if self.remaining_tickets > 0
+      save!
+    end    
+  end
+
   def confirmed!
-    update_attributes!(status: :confirmed)
+    with_lock do
+      charge = payment_detail.charge_card!(self)
+      update_attributes!(status: :confirmed, confirmation_id: charge.try(:id))
+    end
   end
 
   def canceled!
+    payment_detail.object_canceled!(self)
     update_attributes!(status: :canceled)
   end
 

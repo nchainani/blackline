@@ -19,6 +19,14 @@ class RouteRun < ActiveRecord::Base
     times.to_s.split(",")[locations.find_index(location)]
   end
 
+  def ticket_canceled!(ticket)
+    with_lock do
+      reload
+      self.remaining_tickets += 1
+      save!
+    end    
+  end
+
   private
 
   def locations_and_times_match

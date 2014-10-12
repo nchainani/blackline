@@ -4,15 +4,19 @@ class TicketsController < ApplicationController
   def create
     required_params(:amount)
 
+    new_ticket = nil
     if (pass.nil? && payment_details.nil?)
       render_404("Payment details not found")
     elsif route_run.nil?
       render_404("Route not found")
     else
       new_ticket = Ticket.create_new_ticket!(route_run, rider, (pass || payment_details), location, params[:amount])
-      new_ticket.confirmed!
-      render json: new_ticket, root: false
+      new_ticket.confirmed! # This step can ideally be async
+      render json: new_ticket, root: false 
     end
+  rescue Stripe::StripeError => error
+    new_ticket.canceled!
+    raise
   rescue ActiveRecord::RecordInvalid => error
     render_410(error.message)
   rescue RuntimeError => error

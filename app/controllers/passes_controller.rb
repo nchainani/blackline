@@ -4,13 +4,17 @@ class PassesController < ApplicationController
   def create
     required_params(:total_tickets, :amount)
 
+    new_pass = nil
     if payment_details.nil?
       render_404("Payment details not found")
     else
       new_pass = Pass.create_new_pass!(rider, payment_details, pass_plan, params[:total_tickets], params[:amount])
-      new_pass.confirmed!
+      new_pass.confirmed! # This step can ideally be async
       render json: new_pass, root: false
     end
+  rescue Stripe::StripeError => error
+    new_pass.canceled!
+    raise
   end
 
   def show
@@ -19,7 +23,8 @@ class PassesController < ApplicationController
   end
 
   def index
-    render json: rider.passes, root: false
+    arel = rider.passes.where(status: (params[:status] || 'confirmed'))
+    render json: arel, root: false
   end
 
   private

@@ -26,6 +26,10 @@ class ApplicationController < ActionController::API
     render_400(exception.message)
   end
 
+  rescue_from Stripe::StripeError do |exception|
+    render_400("Payment request failed")
+  end
+
   def required_params(*mandatory_params)
     missing_params = mandatory_params.find_all { |param| params[param].nil? }
     raise MissingAttributesError.new(missing_params) unless missing_params.empty? 
