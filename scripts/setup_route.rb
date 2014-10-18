@@ -20,7 +20,7 @@ route.route_runs.create!(bus: bus, run_datetime: 4.hours.from_now, times: "7:15p
 route.route_runs.create!(bus: bus, run_datetime: 6.hours.from_now, times: "9:15p,9:30p,9:45p,10:00p", amount: 299)
 route.route_runs.create!(bus: bus, run_datetime: 7.hours.from_now, times: "10:15p,10:30p,10:45p,11:00p", amount: 299)
 
-FactoryGirl.create(:rider)
+#FactoryGirl.create(:rider)
 
 FactoryGirl.create(:pass_plan, name: "10 tickets for $20.99", description: "Buy 10 tickets for $20.99", amount: 2099, total_tickets: 10)
 FactoryGirl.create(:pass_plan, name: "20 tickets for $35.99", description: "Buy 20 tickets for $35.99", amount: 3599, total_tickets: 20)

@@ -6,6 +6,7 @@ class AddAuthentication < ActiveRecord::Migration
       t.integer :rider_id
       t.string :token
       t.string :secret
+      t.datetime :expires_at
 
       t.timestamps
     end
