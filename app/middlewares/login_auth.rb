@@ -79,8 +79,7 @@ module Middlewares
         rider_obj.save!
         authentication = rider_obj.authentications.create!(provider: rider['provider'], uid: rider['id'], token: rider['token'], expires_at: rider['expires_at'])
       else
-        authentication.expires_at = rider['expires_at']
-        authentication.save!
+        authentication.update_attributes!(token: rider['token'], expires_at: rider['expires_at'])
       end
       authentication
     end
