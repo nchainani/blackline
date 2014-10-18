@@ -3,7 +3,7 @@ class FavoriteLocationsController < ApplicationController
 
   def create
     required_params(:name)
-    create_params = params.slice(:name, :description, :latitude, :longitude)
+    create_params = {name: params[:name], description: params[:description], latitude: params[:latitude], longitude: params[:longitude] }
     location = rider.favorite_locations.create!(create_params)
     render json: location, root: false
   end
