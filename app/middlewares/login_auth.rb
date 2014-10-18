@@ -15,7 +15,7 @@ module Middlewares
       end
       @app.call(env)
     rescue UserNotFound, ActiveRecord::RecordNotFound => e
-      [ 404, {"Content-Type"=>"application/json"}, { error: { httpCode: 404, message: "user not found" }}.to_json]
+      [ 404, {"Content-Type"=>"application/json"}, [{ error: { httpCode: 404, message: "user not found" }}.to_json]]
     end
 
     private
@@ -27,6 +27,8 @@ module Middlewares
         if auth
           env['BLACKLINE_RIDER'] = auth.rider
           env['BLACKLINE_RIDER_AUTH'] = auth
+        else
+          raise UserNotFound
         end
       end
     end
@@ -35,6 +37,10 @@ module Middlewares
       auth = case rider_params['provider']
       when "facebook"
         if (rider = authenticate_facebook!(rider_params['token']))
+          authenticate!(rider_params.merge(rider))
+        end
+      when "gplus"
+        if (rider = authenticate_gplus!(rider_params['token']))
           authenticate!(rider_params.merge(rider))
         end
       end
@@ -47,6 +53,15 @@ module Middlewares
         raise UserNotFound
       end
       body
+    end
+
+    def authenticate_gplus!(token)
+      response = HTTParty.get("https://www.googleapis.com/oauth2/v1/tokeninfo", { query: { access_token: token }})
+      body = JSON.parse(response.body)
+      if body["error"]
+        raise UserNotFound
+      end
+      body.merge('id' => body['user_id'])
     end
 
     def authenticate!(rider)

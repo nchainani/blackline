@@ -23,7 +23,7 @@ class PassesController < ApplicationController
   end
 
   def index
-    arel = rider.passes.where(status: (params[:status] || 'confirmed'))
+    arel = rider.passes.where(status: (params[:status] || 'confirmed')).where("remaining_tickets > 0")
     render json: arel, root: false
   end
 
