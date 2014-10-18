@@ -44,6 +44,7 @@ GEM
       railties (>= 3.0.0)
     foreigner (1.6.1)
       activerecord (>= 3.0.0)
+    geocoder (1.2.5)
     hike (1.2.3)
     httparty (0.13.1)
       json (~> 1.8)
@@ -135,6 +136,7 @@ DEPENDENCIES
   enumerize
   factory_girl_rails
   foreigner
+  geocoder
   httparty
   mysql2
   rails (= 4.1.5)

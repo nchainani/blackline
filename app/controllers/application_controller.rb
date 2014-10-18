@@ -36,6 +36,8 @@ class ApplicationController < ActionController::API
   end
 
   def rider
-    env['BLACKLINE_RIDER']
+    rider = env['BLACKLINE_RIDER']
+    raise ActiveRecord::RecordNotFound.new("Rider not found") if rider.nil?
+    rider
   end
 end

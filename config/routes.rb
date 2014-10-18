@@ -11,6 +11,8 @@ Rails.application.routes.draw do
 
       resources :payment_details, only: [:create, :show, :index]
 
+      resources :favorite_locations, only: [:create, :show, :index]
+
       resources :pass_plans, only: [:show, :index]
     end
   end

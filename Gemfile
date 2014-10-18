@@ -14,6 +14,7 @@ gem 'httparty'
 gem 'awesome_print'
 gem 'stripe'
 gem "rails_config"
+gem 'geocoder'
 
 gem 'factory_girl_rails'
 

@@ -67,12 +67,13 @@ class CreateRiderTables < ActiveRecord::Migration
 
     create_table :favorite_locations do |t|
       t.integer "rider_id", null: false
-      t.string "name", null: false
-      t.string "description"
+      t.string "name"
+      t.string "description", null: false # full address
       t.float "latitude", null: false
       t.float "longitude", null: false
       t.timestamps
     end
+    add_index(:favorite_locations, :name, unique: true)
     add_foreign_key( :favorite_locations, :riders )
   end
 end
