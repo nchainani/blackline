@@ -14,6 +14,10 @@ Rails.application.routes.draw do
       resources :favorite_locations, only: [:create, :show, :index]
 
       resources :pass_plans, only: [:show, :index]
+
+      resources :riders do
+        get 'autocomplete', on: :collection
+      end
     end
   end
   get '/status' => 'application#status'
