@@ -15,8 +15,13 @@ Rails.application.routes.draw do
 
       resources :pass_plans, only: [:show, :index]
 
-      resources :riders do
+      devise_for :riders, skip: :sessions, controllers: {registrations: "riders"}
+      resources :riders, only: [:create] do
         get 'autocomplete', on: :collection
+        post 'login', on: :collection
+        get 'logout', on: :member
+        get 'destroy', on: :member
+        get 'update_password', on: :member
       end
     end
   end

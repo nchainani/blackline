@@ -7,7 +7,6 @@ gem 'rails-api'
 
 gem 'mysql2'
 gem 'foreigner'
-gem 'bcrypt'
 gem 'active_model_serializers', "0.8.1"
 gem 'enumerize'
 gem 'httparty'
@@ -23,6 +22,7 @@ gem 'simple_token_authentication', '~> 1.0'
 
 group :test, :development do
   gem 'rspec-rails'
+  gem 'pry'
 end
 
 # To use ActiveModel has_secure_password

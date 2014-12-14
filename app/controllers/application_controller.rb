@@ -1,4 +1,8 @@
 class ApplicationController < ActionController::API
+  include ActionController::MimeResponds
+  include ActionController::ImplicitRender
+  respond_to :json
+
   class MissingAttributesError < StandardError
     def initialize(missing_attributes)
       super("Mandatory attributes missing: #{missing_attributes}")
@@ -37,7 +41,11 @@ class ApplicationController < ActionController::API
 
   def rider
     rider = env['BLACKLINE_RIDER']
-    raise ActiveRecord::RecordNotFound.new("Rider not found") if rider.nil?
+    unless rider
+      authenticate_rider!
+      rider = current_rider
+    end
+    #raise ActiveRecord::RecordNotFound.new("Rider not found") if rider.nil?
     rider
   end
 end

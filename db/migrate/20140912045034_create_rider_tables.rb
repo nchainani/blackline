@@ -6,7 +6,6 @@ class CreateRiderTables < ActiveRecord::Migration
       t.string "first_name"
       t.string "last_name"
       t.string "email", null: false
-      t.string "password_hash"
       t.boolean "verified", default: false
       t.timestamps
     end

@@ -2,7 +2,9 @@ FactoryGirl.define do
   factory :rider do
     first_name "John"
     last_name "Doe"
-    email "john.doe@gmail.com"
+    sequence :email do |n|
+        "john.doe#{n}@example.com"
+      end
     password "test_password"
   end
 
