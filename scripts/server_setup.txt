@@ -1,0 +1,9 @@
+setup naren user.. copy id_rsa.pub to authorized_keys
+allow sudo access using sudo adduser naren sudo
+
+add blackline user.. copy naren's authorized keys
+
+
+sudo apt-get install bundler
+sudo apt-get install libmysqlclient-dev
+sudo apt-get install mysql-server
