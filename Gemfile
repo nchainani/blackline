@@ -18,6 +18,9 @@ gem 'geocoder'
 
 gem 'factory_girl_rails'
 
+gem 'devise'
+gem 'simple_token_authentication', '~> 1.0'
+
 group :test, :development do
   gem 'rspec-rails'
 end
