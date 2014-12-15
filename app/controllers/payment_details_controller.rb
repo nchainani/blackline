@@ -1,4 +1,5 @@
 class PaymentDetailsController < ApplicationController
+  acts_as_token_authentication_handler_for Rider, fallback_to_devise: false
   before_filter :rider
 
   def create

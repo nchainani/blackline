@@ -22,7 +22,7 @@ module Middlewares
 
     def setup_rider(env)
       request = Rack::Request.new env
-      if (rider_params = request.params)
+      if (["facebook", "gplus"].include? request.params['provider'])
         auth = cached(rider_params) || check_3rd_party(rider_params)
         if auth
           env['BLACKLINE_RIDER'] = auth.rider
