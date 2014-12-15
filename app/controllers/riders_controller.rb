@@ -20,8 +20,7 @@ class RidersController < ApplicationController
   end
 
   def create
-    rider = Rider.new(first_name: params[:first_name],
-                     last_name: params[:last_name],
+    rider = Rider.new(name: params[:name],
                      email: params[:email],
                      password: params[:password])
     if rider.save

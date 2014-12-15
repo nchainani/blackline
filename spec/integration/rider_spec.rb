@@ -3,12 +3,11 @@ require 'rails_helper'
 describe "Rider spec" do
   context "#registration" do
     it "allows registering a new rider" do
-      body = api_post "/riders?first_name=john&last_name=doe&email=john.doe123@gmail.com&password=abcdefghi"
+      body = api_post "/riders?name=john&email=john.doe123@gmail.com&password=abcdefghi"
       response.status.should == 201
       Rider.count.should == 1
       body['id'].should == Rider.last.id
-      body['first_name'].should == "john"
-      body['last_name'].should == "doe"
+      body['name'].should == "john"
       body['email'].should == "john.doe123@gmail.com"
       body['authentication_token'].should_not be_nil
     end

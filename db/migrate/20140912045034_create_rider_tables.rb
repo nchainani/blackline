@@ -3,8 +3,7 @@ class CreateRiderTables < ActiveRecord::Migration
     create_table :riders do |t|
       # this is in extremely simple world. we will probably want to extend this to support
       # multiple authentication schemes (facebook, twitter etc.) and multiple sessions
-      t.string "first_name"
-      t.string "last_name"
+      t.string "name"
       t.string "email", null: false
       t.boolean "verified", default: false
       t.timestamps
