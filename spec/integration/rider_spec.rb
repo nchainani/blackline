@@ -41,6 +41,15 @@ describe "Rider spec" do
     end
   end
 
+  context "token authentication" do
+    it "let's user authenticate using token" do
+      user = create_user
+      puts "/tickets?rider_email=#{user['email']}&rider_token=#{user['authentication_token']}"
+      api_get "/tickets?rider_email=#{user['email']}&rider_token=#{user['authentication_token']}"
+      response.status.should == 200
+    end
+  end
+
   context "#update_password" do
     it "allows user to reset their password"
   end

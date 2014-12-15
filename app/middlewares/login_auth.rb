@@ -22,7 +22,7 @@ module Middlewares
 
     def setup_rider(env)
       request = Rack::Request.new env
-      if (rider_params = request.params['rider'])
+      if (rider_params = request.params)
         auth = cached(rider_params) || check_3rd_party(rider_params)
         if auth
           env['BLACKLINE_RIDER'] = auth.rider
@@ -34,7 +34,7 @@ module Middlewares
     end
 
     def cached(rider_params)
-      arel = Authentication.where(provider: rider_params['provider'], token: rider_params['token'])
+      arel = Authentication.where(provider: rider_params['provider'], token: rider_params['rider_token'])
       arel = arel.where("expires_at > '#{Time.now}'")
       arel.first
     end
@@ -42,18 +42,18 @@ module Middlewares
     def check_3rd_party(rider_params)
       auth = case rider_params['provider']
       when "facebook"
-        if (rider = authenticate_facebook!(rider_params['token']))
+        if (rider = authenticate_facebook!(rider_params['rider_token']))
           authenticate!(rider_params.merge(rider))
         end
       when "gplus"
-        if (rider = authenticate_gplus!(rider_params['token']))
+        if (rider = authenticate_gplus!(rider_params['rider_token']))
           authenticate!(rider_params.merge(rider))
         end
       end
     end
 
-    def authenticate_facebook!(token)
-      response = HTTParty.get("https://graph.facebook.com/me", { query: { access_token: token }})
+    def authenticate_facebook!(rider_token)
+      response = HTTParty.get("https://graph.facebook.com/me", { query: { access_token: rider_token }})
       body = JSON.parse(response.body)
       if body["error"]
         raise UserNotFound
@@ -61,8 +61,8 @@ module Middlewares
       body
     end
 
-    def authenticate_gplus!(token)
-      response = HTTParty.get("https://www.googleapis.com/oauth2/v1/tokeninfo", { query: { access_token: token }})
+    def authenticate_gplus!(rider_token)
+      response = HTTParty.get("https://www.googleapis.com/oauth2/v1/tokeninfo", { query: { access_token: rider_token }})
       body = JSON.parse(response.body)
       if body["error"]
         raise UserNotFound
@@ -77,9 +77,9 @@ module Middlewares
         rider_obj.first_name = rider['first_name']
         rider_obj.last_name = rider['last_name']
         rider_obj.save!
-        authentication = rider_obj.authentications.create!(provider: rider['provider'], uid: rider['id'], token: rider['token'], expires_at: rider['expires_at'])
+        authentication = rider_obj.authentications.create!(provider: rider['provider'], uid: rider['id'], token: rider['rider_token'], expires_at: rider['expires_at'])
       else
-        authentication.update_attributes!(token: rider['token'], expires_at: rider['expires_at'])
+        authentication.update_attributes!(token: rider['rider_token'], expires_at: rider['expires_at'])
       end
       authentication
     end
