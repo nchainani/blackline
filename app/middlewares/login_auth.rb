@@ -23,7 +23,7 @@ module Middlewares
     def setup_rider(env)
       request = Rack::Request.new env
       if (["facebook", "gplus"].include? request.params['provider'])
-        auth = cached(rider_params) || check_3rd_party(rider_params)
+        auth = cached(request.params) || check_3rd_party(request.params)
         if auth
           env['BLACKLINE_RIDER'] = auth.rider
           env['BLACKLINE_RIDER_AUTH'] = auth
@@ -74,8 +74,7 @@ module Middlewares
       authentication = Authentication.where(provider: rider['provider'], uid: rider['id']).first
       unless authentication
         rider_obj = Rider.find_or_create_by(email: rider['email'])
-        rider_obj.first_name = rider['first_name']
-        rider_obj.last_name = rider['last_name']
+        rider_obj.name = rider['name'] || "#{rider['first_name']} #{rider['last_name']}"
         rider_obj.save!
         authentication = rider_obj.authentications.create!(provider: rider['provider'], uid: rider['id'], token: rider['rider_token'], expires_at: rider['expires_at'])
       else

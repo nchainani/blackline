@@ -11,4 +11,9 @@ class Rider < ActiveRecord::Base
   has_many :favorite_locations
   has_many :tickets
   has_many :authentications
+
+  protected
+  def password_required?
+    false
+  end
 end

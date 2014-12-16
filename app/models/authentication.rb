@@ -1,7 +1,8 @@
 class Authentication < ActiveRecord::Base
+  extend Enumerize
   belongs_to :rider
 
   PROVIDERS = [:facebook, :gplus, :blackline]
 
-  validates_inclusion_of :provider, in: PROVIDERS
+  enumerize :provider, in: PROVIDERS
 end
