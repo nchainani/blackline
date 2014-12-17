@@ -13,13 +13,13 @@ describe "Rider spec" do
     end
 
     it "requires mandatory params" do
-      body = api_post "/riders?first_name=john&last_name=doe&password=abcdefghi"
-      response.status.should == 422
-      body['error'].should == {"httpCode"=>422, "message"=>{"email"=>["can't be blank"]}}
+      body = api_post "/riders?name=john&password=abcdefghi"
+      response.status.should == 400
+      body['error'].should == {"httpCode"=>400, "message"=>"Mandatory attributes missing: [:email]"}
 
       body = api_post "/riders?first_name=john&last_name=doe&email=john.doe123@gmail.com"
-      response.status.should == 422
-      body['error'].should == {"httpCode"=>422, "message"=>{"password"=>["can't be blank"]}}
+      response.status.should == 400
+      body['error'].should == {"httpCode"=>400, "message"=>"Mandatory attributes missing: [:name, :password]"}
     end
   end
 
@@ -63,6 +63,6 @@ describe "Rider spec" do
   end
 
   def create_user
-    api_post "/riders?first_name=john&last_name=doe&email=john.doe123@gmail.com&password=abcdefghi"
+    api_post "/riders?name=doe&email=john.doe123@gmail.com&password=abcdefghi"
   end
 end

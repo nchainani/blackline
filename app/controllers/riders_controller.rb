@@ -2,24 +2,8 @@ class RidersController < ApplicationController
   acts_as_token_authentication_handler_for Rider, fallback_to_devise: false
   # before_filter :rider till autocomplete is not dependent on Rider
 
-  GOOGLE_API_KEY = "AIzaSyC5jxBcZXb3ym18VEgHN68dT3LcMNgItPM"
-
-  def autocomplete
-    url_params = {key: GOOGLE_API_KEY, sensor: false, input: params['input'] }
-    url = "https://maps.googleapis.com/maps/api/place/autocomplete/json"
-
-    if params['location']
-      url_params[:location] = params['location']
-      url_params[:radius] = 500000
-    else
-      url_params[:components] = params.fetch(:components, "country:us")
-    end
-
-    response = HTTParty.get(url, { query: url_params })
-    render json: response.body
-  end
-
   def create
+    required_params(:name, :email, :password)
     rider = Rider.new(name: params[:name],
                      email: params[:email],
                      password: params[:password])
@@ -56,7 +40,7 @@ class RidersController < ApplicationController
   end
 
   def update_password
-    if rider.update_attributes(password: params[:new_password])
+    if rider.update_attributes(password: params[:new_password], authentication_token: nil)
       # Sign in the user by passing validation in case their password changed
       sign_in rider, bypass: true
       render json: rider.as_json(auth_token: rider.authentication_token, email: rider.email), status: 200

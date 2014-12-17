@@ -42,7 +42,7 @@ class ApplicationController < ActionController::API
   def rider
     rider = env['BLACKLINE_RIDER']
     unless rider
-      authenticate_rider!
+      authenticate_rider_from_token!
       rider = current_rider
     end
     #raise ActiveRecord::RecordNotFound.new("Rider not found") if rider.nil?

@@ -3,6 +3,7 @@ Rails.application.routes.draw do
     scope "/v1" do
       resources :routes, only: [:index, :show] do
         resources :route_runs, only: [:show]
+        get 'autocomplete', on: :collection
       end
 
       resources :tickets, only: [:create, :show, :index]
@@ -17,7 +18,6 @@ Rails.application.routes.draw do
 
       devise_for :riders, skip: :sessions, controllers: {registrations: "riders"}
       resources :riders, only: [:create] do
-        get 'autocomplete', on: :collection
         post 'login', on: :collection
         get 'logout', on: :member
         get 'destroy', on: :member
