@@ -42,8 +42,10 @@ class CreateRiderTables < ActiveRecord::Migration
       t.integer "pass_plan_id", null: false
       t.string "status", default: "pending" # goes from pending to complete
       t.string "confirmation_id"
+      t.string "uuid", null: false
       t.timestamps
     end
+    add_index(:passes, :uuid, unique: true)
     add_foreign_key( :passes, :riders )
     add_foreign_key( :passes, :payment_details)
     add_foreign_key( :passes, :pass_plans )
@@ -58,8 +60,10 @@ class CreateRiderTables < ActiveRecord::Migration
       t.integer "amount"
       t.string "currency", default: "USD"
       t.string "confirmation_id"
+      t.string "uuid", null: false
       t.timestamps
     end
+    add_index(:tickets, :uuid, unique: true)
     add_foreign_key( :tickets, :route_runs )
     add_foreign_key( :tickets, :riders )
 

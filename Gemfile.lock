@@ -146,6 +146,7 @@ GEM
       polyglot (>= 0.3.1)
     tzinfo (1.2.2)
       thread_safe (~> 0.1)
+    uuidtools (2.1.5)
     warden (1.2.3)
       rack (>= 1.0)
 
@@ -169,3 +170,4 @@ DEPENDENCIES
   rspec-rails
   simple_token_authentication (~> 1.0)
   stripe
+  uuidtools

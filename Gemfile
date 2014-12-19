@@ -16,6 +16,7 @@ gem "rails_config"
 gem 'geocoder'
 
 gem 'factory_girl_rails'
+gem 'uuidtools'
 
 gem 'devise'
 gem 'simple_token_authentication', '~> 1.0'

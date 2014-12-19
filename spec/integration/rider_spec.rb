@@ -33,7 +33,7 @@ describe "Rider spec" do
 
       user = create_user
       body = api_post "/riders/login?password=xxx&email=#{user['email']}"
-      response.status.should == 422
+      response.status.should == 401
 
       body = api_post "/riders/login?password=abcdefghi&email=#{user['email']}"
       response.status.should == 200

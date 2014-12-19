@@ -9,6 +9,8 @@ class Ticket < ActiveRecord::Base
   STATUS_LIST = [:pending, :confirmed, :boarded, :canceled]
   enumerize :status, in: STATUS_LIST
 
+  before_create :assign_uuid
+
   def self.create_new_ticket!(route_run, rider, payment, location, amount)
     payment.verify!
     transaction do
@@ -30,5 +32,9 @@ class Ticket < ActiveRecord::Base
     payment.object_canceled!(self)
     route_run.ticket_canceled!(self)
     update_attributes!(status: :canceled)
+  end
+
+  def assign_uuid
+    self.uuid = UUIDTools::UUID.random_create.to_s
   end
 end

@@ -11,7 +11,7 @@ class Pass < ActiveRecord::Base
 
   validate :validate_remaining_tickets
   validates_presence_of :total_tickets
-  before_create :initialize_remaining_tickets
+  before_create :initialize_remaining_tickets, :assign_uuid
 
   def verify!
     raise "Pass expired" if self.status == "complete" || self.remaining_tickets < 0 || (self.expiry_date && self.expiry_date < Time.now)
@@ -54,6 +54,10 @@ class Pass < ActiveRecord::Base
   def canceled!
     payment_detail.object_canceled!(self)
     update_attributes!(status: :canceled)
+  end
+
+  def assign_uuid
+    self.uuid = UUIDTools::UUID.random_create.to_s
   end
 
   private
