@@ -1,5 +1,5 @@
 class TicketSerializer < ActiveModel::Serializer
-  attributes :id, :status, :route_name, :amount, :currency
+  attributes :id, :status, :route_name, :amount, :currency, :uuid
   attributes :rider, :route_run, :location
 
   def rider
