@@ -11,7 +11,7 @@ class Location < ActiveRecord::Base
     lng2 = longitude + (radius / (69.0 * Math.cos(radians(latitude))))
 
     # This logic borrowed from http://www.plumislandmedia.net/mysql/haversine-mysql-nearest-loc/
-    select("id, lat, lng,
+    select("locations.id, lat, lng,
             69 * DEGREES(ACOS(COS(RADIANS(#{latitude}))
                * COS(RADIANS(locations.lat))
                * COS(RADIANS(#{longitude}) - RADIANS(locations.lng))

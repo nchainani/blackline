@@ -11,7 +11,8 @@ class Route < ActiveRecord::Base
   def self.find_nearby_routes(lat, lng, radius = 50, options = {})
     nearby_stops = Location.nearby_stops(lat, lng, radius)
 
-    Route.active.
-      joins(:locations).merge(Location.where(id: nearby_stops.map(&:id))).all.uniq
+    nearby_stops.joins(:routes).merge(Route.active).map(&:routes).flatten.uniq
+    # Route.active.
+    #   joins(:locations).merge(Location.where(id: nearby_stops.map(&:id))).all.uniq
   end
 end
