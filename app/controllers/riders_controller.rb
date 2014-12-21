@@ -18,7 +18,7 @@ class RidersController < ApplicationController
   end
 
   def login
-    rider = Rider.find_for_database_authentication(email: params[:email])
+    rider = Rider.find_for_database_authentication(email: params[:rider_email])
     if rider.try(:valid_password?, params[:password]) || (rider && authenticate_rider_from_token!)
       sign_in(rider)
       render :json=> rider.as_json(auth_token: rider.authentication_token, email: rider.email), status: 200

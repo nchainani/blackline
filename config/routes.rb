@@ -6,7 +6,9 @@ Rails.application.routes.draw do
         get 'autocomplete', on: :collection
       end
 
-      resources :tickets, only: [:create, :show, :index]
+      resources :tickets, only: [:create, :show, :index] do
+        get 'smallImage', on: :member
+      end
 
       resources :passes, only: [:create, :show, :index]
 

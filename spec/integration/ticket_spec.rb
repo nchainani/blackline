@@ -75,6 +75,11 @@ describe "Ticket creation" do
       response.status.should == 200
       body['id'].should == ticket.id
     end
+    it "returns ticket's image" do
+      body = get "/api/v1/tickets/#{ticket.id}/smallImage?rider_id=#{rider.id}"
+      response.status.should == 200
+      response.headers["Content-Type"].should == "application/octet-stream"
+    end
   end
 
   context "GET /tickets" do

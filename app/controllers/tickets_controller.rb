@@ -38,6 +38,13 @@ class TicketsController < ApplicationController
     render json: arel, root: false
   end
 
+  def smallImage
+    ticket = rider.tickets.find(params[:id])
+    params = { cht: :qr, chs: '200x200', ch1: ticket.uuid }
+    response = HTTParty.get("https://chart.googleapis.com/chart", { query: params })
+    send_data response.body
+  end
+
   private
 
   def route_run

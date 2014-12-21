@@ -32,10 +32,10 @@ describe "Rider spec" do
       response.status.should == 422
 
       user = create_user
-      body = api_post "/riders/login?password=xxx&email=#{user['email']}"
+      body = api_post "/riders/login?password=xxx&rider_email=#{user['email']}"
       response.status.should == 401
 
-      body = api_post "/riders/login?password=abcdefghi&email=#{user['email']}"
+      body = api_post "/riders/login?password=abcdefghi&rider_email=#{user['email']}"
       response.status.should == 200
       body['id'].should_not be_nil
     end
