@@ -17,9 +17,13 @@ class Pass < ActiveRecord::Base
     raise "Pass expired" if self.status == "complete" || self.remaining_tickets < 0 || (self.expiry_date && self.expiry_date < Time.now)
   end
 
-  def self.create_new_pass!(rider, payment_detail, pass_plan, total_tickets, amount)
+  def self.create_new_pass!(rider, payment_detail, pass_plan, options = {})
+    opts = { total_tickets: pass_plan.total_tickets, amount: pass_plan.amount }.merge(options)
     payment_detail.verify!
-    create!(rider: rider, payment_detail: payment_detail, pass_plan: pass_plan, total_tickets: total_tickets, purchase_date: Time.now, amount: amount)
+    create!({rider: rider,
+            payment_detail: payment_detail,
+            pass_plan: pass_plan,
+            purchase_date: Time.now}.merge(opts))
   end
 
   def reserve!(ticket)

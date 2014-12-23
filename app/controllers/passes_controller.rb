@@ -9,7 +9,7 @@ class PassesController < ApplicationController
     if payment_details.nil?
       render_404("Payment details not found")
     else
-      new_pass = Pass.create_new_pass!(rider, payment_details, pass_plan, params[:total_tickets], params[:amount])
+      new_pass = Pass.create_new_pass!(rider, payment_details, pass_plan, {total_tickets: params[:total_tickets], amount: params[:amount]})
       new_pass.confirmed! # This step can ideally be async
       render json: new_pass, root: false
     end
