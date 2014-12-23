@@ -19,6 +19,7 @@ class Pass < ActiveRecord::Base
 
   def self.create_new_pass!(rider, payment_detail, pass_plan, options = {})
     opts = { total_tickets: pass_plan.total_tickets, amount: pass_plan.amount }.merge(options)
+
     payment_detail.verify!
     create!({rider: rider,
             payment_detail: payment_detail,
@@ -49,9 +50,11 @@ class Pass < ActiveRecord::Base
   end
 
   def confirmed!
-    with_lock do
-      charge = payment_detail.charge_card!(self)
-      update_attributes!(status: :confirmed, confirmation_id: charge.try(:id))
+    if !pass_plan.offer || amount > 0
+      with_lock do
+        charge = payment_detail.charge_card!(self)
+        update_attributes!(status: :confirmed, confirmation_id: charge.try(:id))
+      end
     end
   end
 

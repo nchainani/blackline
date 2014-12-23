@@ -9,6 +9,7 @@ class PaymentDetailsController < ApplicationController
                                                    card_type: params[:card_type],
                                                    token: params[:token],
                                                    customer_id: customer.id)
+    rider.assign_offers(payment_detail)
     render json: payment_detail, root: false
   end
 

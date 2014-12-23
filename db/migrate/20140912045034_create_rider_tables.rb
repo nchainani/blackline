@@ -27,6 +27,8 @@ class CreateRiderTables < ActiveRecord::Migration
       t.string "currency", default: "USD"
       t.integer "total_tickets", default: 0
       t.boolean "active", default: true
+      t.string "offer", default: false
+      t.string "offer_type"
       t.timestamps
     end
 

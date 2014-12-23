@@ -12,8 +12,31 @@ class Rider < ActiveRecord::Base
   has_many :tickets
   has_many :authentications
 
+  def offers
+    passes.joins(:pass_plan).merge(PassPlan.offer)
+  end
+
+  def assign_offers(payment_detail)
+    offer_type = Settings.new_user_offer.offer_type
+    if new_user? && offer_type
+      plan = PassPlan.where(offer_type: offer_type).last
+      if plan
+        new_pass = Pass.create_new_pass!(self, payment_detail, plan)
+        new_pass.confirmed! # This step can ideally be async
+      end
+    end
+  end
+
   protected
   def password_required?
     false
+  end
+
+  private
+
+  def new_user?
+    tickets.count == 0 &&
+    payment_details.count == 1 &&
+    passes.count == 0
   end
 end
