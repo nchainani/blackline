@@ -48,4 +48,12 @@ class RidersController < ApplicationController
       render json: {error: { httpCode: 422, message: rider.errors }}, status: 422
     end
   end
+
+  def suggested_payment_method
+    suggested = rider.passes.where("remaining_tickets > 0").where(status: :confirmed).last
+    unless suggested
+      suggested = rider.payment_details.where(active: true).last
+    end
+    render json: suggested || {}, root: false
+  end
 end
