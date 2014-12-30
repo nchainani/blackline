@@ -39,3 +39,7 @@ destination = FactoryGirl.create(:location, name: "Willis Tower, S Wacker Drive,
 polyline = "ste_GfrbwOMsWEcOEqDEuNMwNmCSsCQ_TwAyDWGuIM{@Gm@EkAA{CBkBHiCGULsAh@}DXkBf@{Cv@kFRsBRuCNsFEqYIkj@Mgu@G}^?eGBmBFoAT}B`@aCZsAZ_AvAeDnH{OpCiGfSsb@bTcd@vA{Dd@{AlAqFRcAz@_GhAqE^oAnAiDpBkEnH}OXm@lG{MzAwCpDsGhCoEtAyCr@sB`A}DjAwFTs@`@}@`AsB~@cBv@iA~BsDdByCh@_ATSxDiHfGkM|A_D~EgKxFwMbBmDv@gBHS`CmFbA}BtJoSzIeRhDeHlBmEh@aBbAaDh@sA\\q@~@sA`BcBt@c@|@i@jIyDtB}@zBoAfA}@bBiBrA_Ct@eBr@}Bd@}Bh@qD`@kCl@mD^{A`@qA|AkDpBcEtAuCTi@fE{IdFaKxBoEr@_BnGgM`BkDjGaMbCyErGuMvAiDl@eBnByFbCgGrAoCbCcFlK_UzByEfAyB|IiR|CwGvFqLdNuYfBcDvAuB~@mAhCsCbB{AdAu@z@m@x@c@b@UPKpKqF|FyCnBkAh@[\\SrAs@jCkBp@o@dGkHjAkAz@q@jAs@z@a@x@Yz@SlAQbAGrA@jERpBFjB?|AIzAQ|B_@`Cu@`Bm@nBq@nGuBdBs@\\QbB}@h@]nAeA`B_BxAcBl@_AxBaEBELSvAcCjCcExBwD|A{ChAwBjCkEnAyBxAwCZi@|AgCd@q@fAiApCqC@ATUjC_BDCxAw@n@YbAWpCc@bBIrCEbAEdDAzACnAI|BCZALN@?x@FtAJv@Hh@JNMJAtCExAAhDLj@?A_@?S?g@AiAKef@E}LCeE"
 
 route = FactoryGirl.create(:route, number: 101, name: "Willis Tower Express", description: "Ohare Airport (ORD) - Willis Tower", locations: [first_location, destination], polyline: polyline)
+
+
+
+PassPlan.create!(offer_type: '3_free_tickets', amount: 0, currency: "USD", total_tickets: 3, offer: true, name: "new user - 3 free tickets", description: "new user - 3 free tickets")

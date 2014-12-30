@@ -50,11 +50,9 @@ class Pass < ActiveRecord::Base
   end
 
   def confirmed!
-    if !pass_plan.offer || amount > 0
-      with_lock do
-        charge = payment_detail.charge_card!(self)
-        update_attributes!(status: :confirmed, confirmation_id: charge.try(:id))
-      end
+    with_lock do
+      charge = (!pass_plan.offer || amount > 0) ? payment_detail.charge_card!(self) : nil
+      update_attributes!(status: :confirmed, confirmation_id: charge.try(:id))
     end
   end
 
