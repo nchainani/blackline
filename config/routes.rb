@@ -24,7 +24,7 @@ Rails.application.routes.draw do
         get 'logout', on: :member
         get 'destroy', on: :member
         get 'update_password', on: :member
-        get 'suggested_payment_method', on: :member
+        get 'suggested_payment_method', on: :collection
       end
     end
   end

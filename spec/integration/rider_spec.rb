@@ -68,18 +68,18 @@ describe "Rider spec" do
     let(:payment_detail) { FactoryGirl.create(:payment_detail, rider: Rider.find(rider['id'])) }
     it "returns empty when nothing available" do
       rider = create_user
-      body = api_get "/riders/#{rider['id']}/suggested_payment_method?rider_email=#{rider['email']}&rider_token=#{rider['authentication_token']}"
+      body = api_get "/riders/suggested_payment_method?rider_email=#{rider['email']}&rider_token=#{rider['authentication_token']}"
       body.should == {}
     end
     it "returns pass when available" do
       pass
-      body = api_get "/riders/#{rider['id']}/suggested_payment_method?rider_email=#{rider['email']}&rider_token=#{rider['authentication_token']}"
+      body = api_get "/riders/suggested_payment_method?rider_email=#{rider['email']}&rider_token=#{rider['authentication_token']}"
       body['type'].should == 'pass'
       body['id'].should == pass.id
     end
     it "returns payment details when no pass available" do
       payment_detail
-      body = api_get "/riders/#{rider['id']}/suggested_payment_method?rider_email=#{rider['email']}&rider_token=#{rider['authentication_token']}"
+      body = api_get "/riders/suggested_payment_method?rider_email=#{rider['email']}&rider_token=#{rider['authentication_token']}"
       body['type'].should == 'payment_detail'
       body['id'].should == payment_detail.id
     end
