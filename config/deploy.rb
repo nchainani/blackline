@@ -17,7 +17,7 @@ set :tmp_dir, '/home/blackline/tmp'
 
 # Default deploy_to directory is /var/www/my_app_name
 set :deploy_to, '/home/blackline/blackline'
-set :unicorn_config, "#{current_path}/config/unicorn.rb"
+set :unicorn_config_path, "#{current_path}/config/unicorn.rb"
 
 # Default value for :scm is :git
 # set :scm, :git
