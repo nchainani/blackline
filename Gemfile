@@ -27,6 +27,7 @@ gem 'capistrano3-unicorn'
 # Use Capistrano for deployment
 gem 'capistrano'
 gem 'capistrano-bundler', '>= 1.1'
+gem 'capistrano-rails'
 
 group :test, :development do
   gem 'rspec-rails'

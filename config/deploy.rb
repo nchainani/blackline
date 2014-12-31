@@ -49,7 +49,7 @@ namespace :deploy do
   task :restart do
     # Reload unicorn with capistrano3-unicorn hook
     # needs to be before "on roles()"
-    invoke 'unicorn:reload'
+    invoke 'unicorn:restart'
     on roles(:app), in: :sequence, wait: 5 do
       # Your restart mechanism here, for example:
     end
