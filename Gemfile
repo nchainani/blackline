@@ -26,7 +26,6 @@ gem 'capistrano3-unicorn'
 
 # Use Capistrano for deployment
 gem 'capistrano'
-gem 'rvm1-capistrano3', require: false
 gem 'capistrano-bundler', '>= 1.1'
 
 group :test, :development do
