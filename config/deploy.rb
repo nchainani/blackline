@@ -18,9 +18,10 @@ set :tmp_dir, '/home/blackline/tmp'
 # Default deploy_to directory is /var/www/my_app_name
 set :deploy_to, '/home/blackline/blackline'
 set :unicorn_config_path, "#{current_path}/config/unicorn.rb"
+set :unicorn_pid, "#{shared_path}/pids/unicorn.pid"
 
 # Default value for :scm is :git
-# set :scm, :git
+set :scm, :git
 
 # Default value for :format is :pretty
 # set :format, :pretty
@@ -59,4 +60,3 @@ namespace :deploy do
   before :finishing, 'deploy:restart'
   after 'deploy:rollback', 'deploy:restart'
 end
-
