@@ -18,3 +18,7 @@ sudo apt-get install mysql-server
 sudo apt-get install screen # y
 sudo gem install mysql2 -v '0.3.16'
 sudo apt-get install libmysql-ruby
+
+
+
+# created a security group for ec2 instances and one for RDS
