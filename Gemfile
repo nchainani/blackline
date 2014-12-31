@@ -20,7 +20,14 @@ gem 'uuidtools'
 
 gem 'devise'
 gem 'simple_token_authentication', '~> 1.0'
+gem 'unicorn'
+gem 'unicorn-rails'
+gem 'capistrano3-unicorn'
+
+# Use Capistrano for deployment
 gem 'capistrano'
+gem 'rvm1-capistrano3', require: false
+gem 'capistrano-bundler', '>= 1.1'
 
 group :test, :development do
   gem 'rspec-rails'

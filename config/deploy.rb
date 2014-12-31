@@ -1,9 +1,11 @@
 # config valid only for current version of Capistrano
 lock '3.3.5'
 
+set :stages, %w(production staging)
+set :default_stage, "staging"
+
 set :application, 'blackline'
 set :repo_url, 'git@github.com:nchainani/blackline.git'
-
 
 set :user, :accounting
 set :tmp_dir, '/home/blackline/tmp'
@@ -38,15 +40,20 @@ set :deploy_to, '/home/blackline/blackline'
 # Default value for keep_releases is 5
 # set :keep_releases, 5
 
+after 'deploy:publishing', 'deploy:restart'
 namespace :deploy do
-
-  after :restart, :clear_cache do
-    on roles(:web), in: :groups, limit: 3, wait: 10 do
-      # Here we can do anything such as:
-      # within release_path do
-      #   execute :rake, 'cache:clear'
-      # end
+  desc 'Restart application'
+  task :restart do
+    # Reload unicorn with capistrano3-unicorn hook
+    # needs to be before "on roles()"
+    invoke 'unicorn:reload'
+    on roles(:app), in: :sequence, wait: 5 do
+      # Your restart mechanism here, for example:
     end
   end
-
+ 
+  after :finishing, 'deploy:cleanup'
+  before :finishing, 'deploy:restart'
+  after 'deploy:rollback', 'deploy:restart'
 end
+
