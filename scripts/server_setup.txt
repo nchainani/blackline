@@ -10,11 +10,11 @@ sudo adduser blackline
 add blackline user.. copy naren's authorized keys
 
 
-sudo apt-get update
-sudo apt-get install git
-sudo apt-get install bundler
-sudo apt-get install libmysqlclient-dev
+sudo apt-get update # y
+sudo apt-get install git # y
+sudo apt-get install bundler # y
+sudo apt-get install libmysqlclient-dev # y
 sudo apt-get install mysql-server
-sudo apt-get install screen
+sudo apt-get install screen # y
 sudo gem install mysql2 -v '0.3.16'
 sudo apt-get install libmysql-ruby
