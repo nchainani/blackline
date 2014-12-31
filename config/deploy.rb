@@ -3,6 +3,8 @@ lock '3.3.5'
 
 set :stages, %w(production staging)
 set :default_stage, "staging"
+set :rails_env, fetch(:stage)
+set :deploy_env, fetch(:stage)
 
 set :application, 'blackline'
 set :repo_url, 'git@github.com:nchainani/blackline.git'
@@ -15,6 +17,7 @@ set :tmp_dir, '/home/blackline/tmp'
 
 # Default deploy_to directory is /var/www/my_app_name
 set :deploy_to, '/home/blackline/blackline'
+set :unicorn_config, "#{current_path}/config/unicorn.rb"
 
 # Default value for :scm is :git
 # set :scm, :git
