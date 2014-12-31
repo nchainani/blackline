@@ -22,3 +22,9 @@ sudo apt-get install libmysql-ruby
 
 
 # created a security group for ec2 instances and one for RDS
+
+# setup SSL
+http://docs.aws.amazon.com/ElasticLoadBalancing/latest/DeveloperGuide/ssl-server-cert.html
+
+use this to self sign the certificate
+http://www.akadia.com/services/ssh_test_certificate.html
