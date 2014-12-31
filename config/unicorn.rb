@@ -6,8 +6,8 @@ preload_app true
 system("mkdir -p /home/blackline/blackline/shared/pids")
 system("mkdir -p /home/blackline/blackline/shared/logs")
 pid "/home/blackline/blackline/shared/pids/unicorn.pid"
-stderr_path "/home/blackline/blackline/shared/log/unicorn.stderr.log"
-stdout_path "/home/blackline/blackline/shared/log/unicorn.stdout.log"
+stderr_path "/home/blackline/blackline/shared/logs/unicorn.stderr.log"
+stdout_path "/home/blackline/blackline/shared/logs/unicorn.stdout.log"
 
 before_fork do |server, worker|
   defined?(ActiveRecord::Base) and
