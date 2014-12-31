@@ -27,6 +27,14 @@ test: &test
   <% end %> 
   database: blackline_test<%= ENV['DATABASE_SUFFIX'] %><%= ENV['TEST_ENV_NUMBER'] %>
 
+staging:
+  reconnect: true
+  adapter:  mysql2
+  database: blackline_staging
+  username: blackline
+  password: blackline
+  host: blackline-staging.cwydehrtifse.us-west-2.rds.amazonaws.com
+
 production:
   <<: *common
   database: blackline_production<%= ENV['DATABASE_SUFFIX'] %>

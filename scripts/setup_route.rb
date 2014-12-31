@@ -42,4 +42,4 @@ route = FactoryGirl.create(:route, number: 101, name: "Willis Tower Express", de
 
 
 
-PassPlan.create!(offer_type: '3_free_tickets', amount: 0, currency: "USD", total_tickets: 3, offer: true, name: "new user - 3 free tickets", description: "new user - 3 free tickets")
+PassPlan.create!(offer_type: '3_free_tickets', amount: 0, currency: "USD", total_tickets: 3, offer: true, name: "new user - 3 free tickets", description: "3 free tickets")

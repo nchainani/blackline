@@ -20,6 +20,7 @@ gem 'uuidtools'
 
 gem 'devise'
 gem 'simple_token_authentication', '~> 1.0'
+gem 'capistrano'
 
 group :test, :development do
   gem 'rspec-rails'
