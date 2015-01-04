@@ -42,3 +42,5 @@ https://support.ssl.com/Knowledgebase/Article/View/19/0/der-vs-crt-vs-cer-vs-pem
  
  
  # put haproxy in front
+ apt-get install haproxy
+ haproxy -f /home/blackline/blackline/current/config/haproxy.cfg -D
