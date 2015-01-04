@@ -9,7 +9,7 @@ set :deploy_env, fetch(:stage)
 set :application, 'blackline'
 set :repo_url, 'git@github.com:nchainani/blackline.git'
 
-set :user, :accounting
+set :user, :blackline
 set :tmp_dir, '/home/blackline/tmp'
 
 # Default branch is :master
