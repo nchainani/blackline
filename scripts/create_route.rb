@@ -46,3 +46,14 @@ class Directions
     [point['lat'], point['lng']]
   end
 end
+
+locations = []
+locations << "3206 North Halsted Street, Chicago, IL"
+locations << "2800 North Halsted Street, Chicago, IL"
+locations << "2384 N Lincoln Ave, Chicago, IL"
+locations << "2012 North Larrabee Street, Chicago, IL 60614,"
+locations << "1600 North Larrabee Street, Chicago, IL 60614, USA"
+locations << "800 North Larrabee Street, Chicago, IL 60654"
+
+bus = Bus.create!(capacity: 38, bus_type: "bus", owner: "M and M", registration_number: "234234")
+route.route_runs.create!(bus_id: bus.id, run_datetime: Time.parse("2015-01-05 13:30:00"), amount: 1.99, currency: :USD, times: "7:30,7:33,7:37,7:44,7:48,7:55")
