@@ -23,6 +23,6 @@ class Route < ActiveRecord::Base
   end
 
   def today?(run)
-    run.run_datetime.in_time_zone(self.timezone).to_date == Time.find_zone("Eastern Time (US & Canada)").today
+    run.run_datetime.in_time_zone(self.timezone).to_date == Time.find_zone(self.timezone).today
   end
 end

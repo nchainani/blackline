@@ -1,7 +1,7 @@
 class RouteRunSerializer < ActiveModel::Serializer
   attributes :id, :remaining_tickets, :run_datetime, :amount, :currency, :details, :bus
 
-  attributes :run_date_pretty
+  attributes :run_date_pretty, :run_datetime_pretty
 
   def details
     times = object.times.split(",")
@@ -21,10 +21,21 @@ class RouteRunSerializer < ActiveModel::Serializer
 
   def run_date_pretty
     # prints "December 19, 2014"
-    object.run_datetime.strftime "%B %d, %Y"
+    in_local_time.strftime "%B %d, %Y"
+  end
+
+  def run_datetime_pretty
+    # prints "December 19, 2014"
+    in_local_time.strftime "%B %d, %Y - %H:%M %p"
   end
 
   def bus
     BusSerializer.new(object.bus)
+  end
+
+  private
+
+  def in_local_time
+    object.run_datetime.in_time_zone(object.route.timezone)
   end
 end
