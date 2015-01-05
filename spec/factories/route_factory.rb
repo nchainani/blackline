@@ -6,6 +6,7 @@ FactoryGirl.define do
     direction "East"
     polyline "{cu~F`|wuOMsTCIKIU?[Fm@Zo@`@{C~A{ChBaDdBuFfDuBtA_N|HyBlAa@\\O^Ad@XzU@j@qAYmB]y@Qm@Gk@@gALs@PwAj@kAb@}@PiDp@y@TQLm@LeDn@}GfAkEn@}BN_JN}@BeALkDdAQHuMhFoIhDqIlCcHpAwFv@oRbEs@OcB?uB@a@@]HN~A@FDb@h@zFD`@`@vG@zF?tBfA[d@KjAGD?"
     active true
+    timezone "Eastern Time (US & Canada)"
     locations {[create(:location)]}
   end
 

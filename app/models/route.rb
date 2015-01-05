@@ -1,7 +1,11 @@
 class Route < ActiveRecord::Base
+  extend Enumerize
   has_many :route_runs
   has_and_belongs_to_many :locations
   scope :active, -> { where(active: true) }
+
+  TIMEZONES = ActiveSupport::TimeZone.zones_map.keys
+  enumerize :timezone, in: TIMEZONES
 
   # runs in the future (excludes past runs)
   def immediate_runs
@@ -16,5 +20,9 @@ class Route < ActiveRecord::Base
     nearby_stops.joins(:routes).merge(Route.active).map(&:routes).flatten.uniq
     # Route.active.
     #   joins(:locations).merge(Location.where(id: nearby_stops.map(&:id))).all.uniq
+  end
+
+  def today?(run)
+    run.run_datetime.in_time_zone(self.timezone).to_date == Time.find_zone("Eastern Time (US & Canada)").today
   end
 end
