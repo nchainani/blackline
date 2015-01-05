@@ -5,7 +5,9 @@ class Route < ActiveRecord::Base
 
   # runs in the future (excludes past runs)
   def immediate_runs
-    route_runs.where("run_datetime > '#{Time.now.utc}'").limit(10)
+    now = Time.now.utc
+    uptil = now + 20.hours
+    route_runs.where(run_datetime: now..uptil).limit(10)
   end
 
   def self.find_nearby_routes(lat, lng, radius = 50, options = {})
