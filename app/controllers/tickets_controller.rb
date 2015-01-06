@@ -30,12 +30,12 @@ class TicketsController < ApplicationController
   end
 
   def index
-    arel = rider.tickets.where(status: (params[:status] || 'confirmed'))
+    arel = rider.tickets.where(status: (params[:status] || 'confirmed')).joins(:route_run)
     if params[:datetime]
       sign = (params[:past] == true ? "<" : ">=")
-      arel = arel.joins(:route_run).merge(RouteRun.where("run_datetime #{sign} '#{params[:datetime]}'"))
+      arel = arel.merge(RouteRun.where("run_datetime #{sign} '#{params[:datetime]}'"))
     end
-    render json: arel, root: false
+    render json: arel.order("run_datetime DESC"), root: false
   end
 
   def smallImage
