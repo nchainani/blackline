@@ -15,7 +15,7 @@ class FavoriteLocationsController < ApplicationController
   end
 
   def index
-    arel = rider.favorite_locations
+    arel = rider.favorite_locations.order("created_at DESC")
     render json: arel, root: false
   end
 end
