@@ -1,8 +1,10 @@
 # Load the Rails application.
 require File.expand_path('../application', __FILE__)
+require "#{Rails.root}/app/middlewares/authentication"
 require "#{Rails.root}/app/middlewares/login_auth"
 
 Rails.application.configure do
+  config.middleware.use(Middlewares::Authentication)
   config.middleware.use(Middlewares::LoginAuth)
 end
 

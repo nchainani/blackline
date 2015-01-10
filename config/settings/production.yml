@@ -1,1 +1,3 @@
 stripe_secret_key: sk_test_PSSHo1uq4atGjAdfVD2jfnXi
+client_keys:
+  - 3FF9142F0120C8B05F85F1C9923DFB2364B7ECCB59435134E2C030A8CC73 # openssl rand -hex 30
