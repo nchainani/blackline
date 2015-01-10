@@ -40,8 +40,10 @@ class TicketsController < ApplicationController
 
   def smallImage
     ticket = rider.tickets.find(params[:id])
-    params = { cht: :qr, chs: '200x200', ch1: ticket.uuid }
+    params = { cht: :qr, chs: '300x300', chl: ticket.uuid }
     response = HTTParty.get("https://chart.googleapis.com/chart", { query: params })
+    # params = { size: '200x200', data: ticket.uuid }
+    # response = HTTParty.get("https://api.qrserver.com/v1/create-qr-code", query: params)
     send_data response.body
   end
 
