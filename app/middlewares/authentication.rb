@@ -5,7 +5,7 @@ module Middlewares
     end
 
     def call(env)
-      if valid_client?(env)
+      if valid_client?(env) || env["PATH_INFO"].to_s.start_with?("/status")
         @app.call(env)
       else
         [ 401, {"Content-Type"=>"application/json"}, [{ error: { httpCode: 401, message: "unknown client" }}.to_json]]
@@ -17,7 +17,8 @@ module Middlewares
     end
 
     def client_token(env)
-      env['HTTP_BLACKLINE_CLIENT_TOKEN'].to_s
+      request = Rack::Request.new(env)
+      (env['HTTP_BLACKLINE_CLIENT_TOKEN'] || request.params['blackline_token']).to_s
     end
   end
 end
