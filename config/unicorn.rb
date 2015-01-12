@@ -4,11 +4,11 @@ timeout 15
 preload_app true
 
 system("mkdir -p /home/blackline/blackline/shared/pids")
-system("mkdir -p /home/blackline/blackline/shared/logs")
+system("mkdir -p /home/blackline/blackline/shared/log")
 pidfile = "/home/blackline/blackline/shared/pids/unicorn.pid"
 pid pidfile
-stderr_path "/home/blackline/blackline/shared/logs/unicorn.stderr.log"
-stdout_path "/home/blackline/blackline/shared/logs/unicorn.stdout.log"
+stderr_path "/home/blackline/blackline/shared/log/unicorn.stderr.log"
+stdout_path "/home/blackline/blackline/shared/log/unicorn.stdout.log"
 
 before_fork do |server, worker|
   defined?(ActiveRecord::Base) and
