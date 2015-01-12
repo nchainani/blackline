@@ -34,7 +34,7 @@ module Middlewares
     end
 
     def cached(rider_params)
-      arel = Authentication.where(provider: rider_params['provider'], token: rider_params['rider_token'])
+      arel = ::Authentication.where(provider: rider_params['provider'], token: rider_params['rider_token'])
       arel = arel.where("expires_at > '#{Time.now}'")
       arel.first
     end
@@ -71,7 +71,7 @@ module Middlewares
     end
 
     def authenticate!(rider)
-      authentication = Authentication.where(provider: rider['provider'], uid: rider['id']).first
+      authentication = ::Authentication.where(provider: rider['provider'], uid: rider['id']).first
       unless authentication
         rider_obj = Rider.find_or_create_by(email: rider['email'])
         rider_obj.name = rider['name'] || "#{rider['first_name']} #{rider['last_name']}"
