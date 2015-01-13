@@ -1,5 +1,5 @@
 module Middlewares
-  class Authentication
+  class TokenAuthentication
     def initialize( app )
       @app = app
     end
