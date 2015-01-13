@@ -5,5 +5,5 @@ class FavoriteLocation < ActiveRecord::Base
   after_validation :geocode
 
   reverse_geocoded_by :latitude, :longitude, address: :description
-  after_validation :reverse_geocode
+  after_validation :reverse_geocode, if: ->(obj){ obj.description.to_s.empty? }
 end
