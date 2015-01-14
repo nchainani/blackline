@@ -94,10 +94,10 @@ Devise.setup do |config|
   # a value less than 10 in other environments. Note that, for bcrypt (the default
   # encryptor), the cost increases exponentially with the number of stretches (e.g.
   # a value of 20 is already extremely slow: approx. 60 seconds for 1 calculation).
-  config.stretches = Rails.env.test? ? 1 : 10
+  config.stretches = Rails.env.test? ? 1 : 12
 
   # Setup a pepper to generate the encrypted password.
-  # config.pepper = 'dd3252b2d906bf77dee5e57773ca8ee240f25f43bc74c50775ed3e26dd38e36facfb9590290d9a9369e8bfa1283e7f739121a239681b23819dc8b2a526c43750'
+  #config.pepper = 'dd3252b2d906bf77dee5e57773ca8ee240f25f43bc74c50775ed3e26dd38e36facfb9590290d9a9369e8bfa1283e7f739121a239681b23819dc8b2a526c43750'
 
   # ==> Configuration for :confirmable
   # A period that the user is allowed to access the website even without
@@ -140,7 +140,7 @@ Devise.setup do |config|
 
   # ==> Configuration for :validatable
   # Range for password length.
-  config.password_length = 5..128
+  config.password_length = 6..128
 
   # Email regex used to validate email formats. It simply asserts that
   # one (and only one) @ exists in the given string. This is mainly
