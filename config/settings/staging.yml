@@ -1,3 +1,5 @@
 stripe_secret_key: sk_test_PSSHo1uq4atGjAdfVD2jfnXi
 client_keys:
   - test_key
+encryption:
+  customer_id: 4B0714C74E5B41014D481F86B9B5FF59FE4C6803B95D6176AF6957B8ED43

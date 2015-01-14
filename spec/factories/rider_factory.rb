@@ -11,7 +11,7 @@ FactoryGirl.define do
     rider
     last4 "************4242"
     token "sdf23423sfsr243rwrwserfsef"
-    customer_id "cus_124234234234"
+    customer "cus_124234234234"
     active true
   end
 

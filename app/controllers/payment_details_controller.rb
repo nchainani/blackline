@@ -8,7 +8,7 @@ class PaymentDetailsController < ApplicationController
     payment_detail = rider.payment_details.create!(last4: params[:last4],
                                                    card_type: params[:card_type],
                                                    token: params[:token],
-                                                   customer_id: customer.id)
+                                                   customer: customer.id)
     rider.assign_offers(payment_detail)
     render json: payment_detail, root: false
   end

@@ -1,2 +1,4 @@
 new_user_offer:
   offer_type: 3_free_tickets
+encryption:
+  customer_id: a_good_key_please

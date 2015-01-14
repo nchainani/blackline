@@ -5,6 +5,8 @@ class PaymentDetail < ActiveRecord::Base
 
   before_create :obscure_number
 
+  attr_encrypted :customer, key: Settings.encryption.customer_id, attribute: 'customer_id'
+
   # not much to verify here unless we get something explicit from Stripe
   def verify!
     raise "Payment details not active anymore" if active == false
@@ -18,7 +20,7 @@ class PaymentDetail < ActiveRecord::Base
     charge = Stripe::Charge.create(
       amount: object.amount,
       currency: object.currency,
-      customer: customer_id
+      customer: customer
     )
     charge
   end

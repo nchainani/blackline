@@ -5,6 +5,7 @@ require "#{Rails.root}/app/middlewares/login_auth"
 
 SENSITIVE_FIELDS = [
   :rider_token,
+  :token, # comes from stripe
   # default
   :password
 ]

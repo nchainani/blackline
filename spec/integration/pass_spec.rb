@@ -7,7 +7,7 @@ describe "Pass creation" do
 
   context "POST /pass" do
     it "creates the pass using payment details" do
-      expect(Stripe::Charge).to receive(:create).with({ amount: 2399, currency: "USD", customer: payment.customer_id })
+      expect(Stripe::Charge).to receive(:create).with({ amount: 2399, currency: "USD", customer: payment.customer })
       body = api_post "/passes?rider_id=#{rider.id}&payment_detail_id=#{payment.id}&total_tickets=1&amount=2399&pass_plan_id=#{pass_plan.id}"
       response.status.should == 200
       body['id'].should == Pass.last.id

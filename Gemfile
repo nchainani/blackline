@@ -14,6 +14,7 @@ gem 'awesome_print'
 gem 'stripe'
 gem "rails_config"
 gem 'geocoder'
+gem 'attr_encrypted'
 
 gem 'factory_girl_rails'
 gem 'uuidtools'
