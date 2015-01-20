@@ -11,6 +11,7 @@ class Rider < ActiveRecord::Base
   has_many :favorite_locations
   has_many :tickets
   has_many :authentications
+  has_many :devices
 
   def offers
     passes.joins(:pass_plan).merge(PassPlan.offer)

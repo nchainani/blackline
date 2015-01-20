@@ -31,6 +31,9 @@ class RidersController < ApplicationController
   def logout
     rider.authentication_token = nil
     rider.save!
+    if params[:device_token]
+      rider.devices.destroy_all(device_token: params[:device_token])
+    end
     render nothing: true
   end
 
@@ -55,5 +58,11 @@ class RidersController < ApplicationController
       suggested = rider.payment_details.where(active: true).last
     end
     render json: suggested || {}, root: false
+  end
+
+  def register_token
+    required_params(:device, :device_token)
+    rider.devices.find_or_create_by!(device: params[:device], device_token: params[:device_token])
+    render nothing: true
   end
 end

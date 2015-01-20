@@ -85,6 +85,27 @@ describe "Rider spec" do
     end
   end
 
+  context '#register_token' do
+    let(:rider) { create_user }
+    before do
+      rider
+    end
+    it 'raises error when mandatory params missing' do
+      body = api_post "/riders/register_token?rider_email=#{rider['email']}&rider_token=#{rider['authentication_token']}"
+      response.status.should == 400
+      body['error']['message'].should == "Mandatory attributes missing: [:device, :device_token]"
+    end
+    it "registers device and token" do
+      r = Rider.last
+      r.devices.count.should == 0
+      body = api_post "/riders/register_token?rider_email=#{rider['email']}&rider_token=#{rider['authentication_token']}&device=iphone&device_token=abc"
+      response.status.should == 200
+      r.devices.count.should == 1
+      d = r.devices.last
+      d.device.should == "iphone"
+    end
+  end
+
   def create_user
     api_post "/riders?name=doe&email=john.doe123@gmail.com&password=abcdefghi"
   end

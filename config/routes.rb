@@ -21,6 +21,7 @@ Rails.application.routes.draw do
       devise_for :riders, skip: :sessions, controllers: {registrations: "riders"}
       resources :riders, only: [:create] do
         post 'login', on: :collection
+        post 'register_token', on: :collection
         get 'logout', on: :member
         get 'destroy', on: :member
         get 'update_password', on: :member
