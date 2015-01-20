@@ -31,8 +31,8 @@ class RidersController < ApplicationController
   def logout
     rider.authentication_token = nil
     rider.save!
-    if params[:device_token]
-      rider.devices.where(device_token: params[:device_token]).update_all(active: false)
+    if params[:device_token] && params[:device]
+      rider.devices.where(device: params[:device], device_token: params[:device_token]).update_all(active: false)
     end
     render nothing: true
   end

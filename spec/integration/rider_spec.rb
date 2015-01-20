@@ -77,7 +77,7 @@ describe "Rider spec" do
       d.device_token.should == "xyz"
       d.device.should == "iphone"
       d.active.should == true
-      body = api_get "/riders/#{rider['id']}/logout?rider_email=#{rider['email']}&rider_token=#{rider['authentication_token']}&device_token=xyz"
+      body = api_get "/riders/#{rider['id']}/logout?rider_email=#{rider['email']}&rider_token=#{rider['authentication_token']}&device_token=xyz&device=iphone"
       r.reload; d.reload
       d.active.should == false
     end
