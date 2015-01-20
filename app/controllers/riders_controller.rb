@@ -32,7 +32,7 @@ class RidersController < ApplicationController
     rider.authentication_token = nil
     rider.save!
     if params[:device_token]
-      rider.devices.destroy_all(device_token: params[:device_token])
+      rider.devices.where(device_token: params[:device_token]).update_all(active: false)
     end
     render nothing: true
   end
@@ -62,7 +62,9 @@ class RidersController < ApplicationController
 
   def register_token
     required_params(:device, :device_token)
-    rider.devices.find_or_create_by!(device: params[:device], device_token: params[:device_token])
+    token = rider.devices.find_or_create_by!(device: params[:device], device_token: params[:device_token])
+    token.active = true
+    token.save!
     render nothing: true
   end
 end

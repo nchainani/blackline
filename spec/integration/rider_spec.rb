@@ -55,7 +55,32 @@ describe "Rider spec" do
   end
 
   context "#logout" do
-    it "changes the token"
+    let(:rider) { create_user }
+    before do
+      rider
+    end
+    it "changes the token" do
+      r = Rider.last
+      old_token = r.authentication_token
+      body = api_get "/riders/#{rider['id']}/logout?rider_email=#{rider['email']}&rider_token=#{rider['authentication_token']}"
+      response.status.should == 200
+      r.reload
+      new_token = r.authentication_token
+      new_token.should_not == old_token
+      new_token.should_not be_nil
+    end
+    it "marks token as inactive on logout" do
+      assign_device_token(rider, "xyz")
+      r = Rider.last
+      r.devices.count.should == 1
+      d = r.devices.last
+      d.device_token.should == "xyz"
+      d.device.should == "iphone"
+      d.active.should == true
+      body = api_get "/riders/#{rider['id']}/logout?rider_email=#{rider['email']}&rider_token=#{rider['authentication_token']}&device_token=xyz"
+      r.reload; d.reload
+      d.active.should == false
+    end
   end
 
   context "#destroy" do
@@ -108,5 +133,9 @@ describe "Rider spec" do
 
   def create_user
     api_post "/riders?name=doe&email=john.doe123@gmail.com&password=abcdefghi"
+  end
+
+  def assign_device_token(rider, token)
+    body = api_post "/riders/register_token?rider_email=#{rider['email']}&rider_token=#{rider['authentication_token']}&device=iphone&device_token=#{token}"
   end
 end
