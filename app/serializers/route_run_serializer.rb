@@ -19,8 +19,10 @@ class RouteRunSerializer < ActiveModel::Serializer
     array
   end
 
-  def bus
-    BusSerializer.new(object.bus)
+  has_one :bus
+  def include_bus?
+    # till some one comes with a use case for returning bus
+    !@options[:no_bus]
   end
 
   def run_datetime_local

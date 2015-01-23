@@ -2,12 +2,14 @@ class TicketSerializer < ActiveModel::Serializer
   attributes :id, :status, :route_name, :amount, :currency, :uuid
   attributes :rider, :route_run, :location
 
-  def rider
-    RiderSerializer.new(object.rider, root: false)
+  has_one :rider
+  def include_rider?
+    !@options[:no_rider]
   end
 
-  def route_run
-    RouteRunSerializer.new(object.route_run, root: false)
+  has_one :route_run
+  def include_route_run?
+    !@options[:no_route_run]
   end
 
   def location
