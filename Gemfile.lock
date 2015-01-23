@@ -183,6 +183,7 @@ GEM
     uuidtools (2.1.5)
     warden (1.2.3)
       rack (>= 1.0)
+    workflow (1.2.0)
 
 PLATFORMS
   ruby
@@ -212,3 +213,4 @@ DEPENDENCIES
   unicorn
   unicorn-rails
   uuidtools
+  workflow

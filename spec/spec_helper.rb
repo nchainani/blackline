@@ -5,7 +5,7 @@ end
 
 def api_post(url, body = nil, api_token=nil)
   post "/api/v1/#{url}", body, 'HTTP_BLACKLINE_CLIENT_TOKEN' => 'test_key', 'HTTP_ACCEPT' => "application/json"
-  ActiveSupport::JSON.decode(response.body)
+  ActiveSupport::JSON.decode(response.body) rescue nil
 end
 
 require 'factory_girl'

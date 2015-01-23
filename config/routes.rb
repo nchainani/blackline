@@ -2,7 +2,11 @@ Rails.application.routes.draw do
   scope "/api" do
     scope "/v1" do
       resources :routes, only: [:index, :show] do
-        resources :route_runs, only: [:show]
+        resources :route_runs, only: [:show] do
+          post :start, on: :member
+          post :complete, on: :member
+          post :update_location, on: :member
+        end
         get 'autocomplete', on: :collection
       end
 
