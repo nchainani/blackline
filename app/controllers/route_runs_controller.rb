@@ -14,13 +14,22 @@ class RouteRunsController < ApplicationController
 
   def update_location
     required_params(:lat, :lng)
-    route_run.update_location!(params[:lat], params[:lng])
+    unless route_run.complete?
+      location_update = route_run.route_run_location_updates.find_or_create_by!(route_run_id: route_run.id)
+      location_update.update_attributes!(lat: params[:lat], lng: params[:lng])
+    end
     render nothing: true
   end
 
   def complete
     route_run.complete!
     render nothing: true
+  end
+
+  def location_status
+    location = route_run.route_run_location_updates.last
+    status = { status: route_run.workflow_state, lat: location.try(:lat), lng: location.try(:lng) }
+    render json: status
   end
 
   private

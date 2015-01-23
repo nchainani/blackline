@@ -5,6 +5,7 @@ class RouteRun < ActiveRecord::Base
   belongs_to :bus
   delegate :locations, to: :route
   has_many :tickets
+  has_many :route_run_location_updates
 
   validate :locations_and_times_match, :validate_total_tickets, :validate_remaining_tickets
   before_create :initialize_seats
@@ -35,9 +36,6 @@ class RouteRun < ActiveRecord::Base
     end
     state :running do
       event :start, transitions_to: :running
-      event :update_location, transitions_to: :running do |lat, lng|
-        update_attributes!(lat: lat, lng: lng)
-      end
       event :complete, transitions_to: :complete
     end
     state :complete do
