@@ -73,4 +73,21 @@ describe "Route Run Controller spec" do
       }
     end
   end
+
+  context '#tickets' do
+    it "returns empty set when no tickets" do
+      body = api_get "/routes/#{route.id}/route_runs/#{route_run.id}/tickets"
+      response.status.should == 200
+      body.should == []
+    end
+    it "tickets are sorted by rider's name" do
+      ticket1 = FactoryGirl.create(:ticket, route_run: route_run, rider: FactoryGirl.create(:rider, name: "XXXXXXX"))
+      ticket2 = FactoryGirl.create(:ticket, route_run: route_run, rider: FactoryGirl.create(:rider, name: "AAAAAAA"))
+      body = api_get "/routes/#{route.id}/route_runs/#{route_run.id}/tickets"
+      response.status.should == 200
+      body.size.should == 2
+      body.first['id'].should == ticket2.id
+      body.second['id'].should == ticket1.id
+    end
+  end
 end

@@ -7,6 +7,7 @@ Rails.application.routes.draw do
           post :complete, on: :member
           post :update_location, on: :member
           get :location_status, on: :member
+          get :tickets, on: :member
         end
         get 'autocomplete', on: :collection
       end

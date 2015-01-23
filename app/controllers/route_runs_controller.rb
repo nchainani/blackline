@@ -32,6 +32,10 @@ class RouteRunsController < ApplicationController
     render json: status
   end
 
+  def tickets
+    render json: route_run.tickets.where("status <> 'canceled'").joins(:rider).order("riders.name"), root: false
+  end
+
   private
 
   def route_run
