@@ -9,7 +9,7 @@ class RidersController < ApplicationController
                      password: params[:password])
     if rider.save
       sign_in(rider)
-      render json: rider, root: false, status: 201
+      render json: rider, root: false, protected: true, status: 201
       return
     else
       warden.custom_failure!
@@ -21,7 +21,7 @@ class RidersController < ApplicationController
     rider = Rider.find_for_database_authentication(email: params[:rider_email])
     if rider.try(:valid_password?, params[:password]) || (rider && authenticate_rider_from_token!)
       sign_in(rider)
-      render json: rider, root: false, status: 200
+      render json: rider, root: false, protected: true, status: 200
       return
     else
       render json: {error: { httpCode: 422, message: "Invalid login credentials" }}, status: 422
@@ -46,7 +46,7 @@ class RidersController < ApplicationController
     if rider.update_attributes(password: params[:new_password], authentication_token: nil)
       # Sign in the user by passing validation in case their password changed
       sign_in rider, bypass: true
-      render json: rider, root: false, status: 200
+      render json: rider, root: false, protected: true, status: 200
     else
       render json: {error: { httpCode: 422, message: rider.errors }}, status: 422
     end

@@ -1,3 +1,4 @@
-class RiderSerializer < ActiveModel::Serializer
-  attributes :id, :name, :email, :authentication_token
+class RiderSerializer < BaseSerializer
+  attributes :id, :name, :email
+  protected_attributes :authentication_token
 end
