@@ -35,7 +35,7 @@ class TicketsController < ApplicationController
       sign = (params[:past] == true ? "<" : ">=")
       arel = arel.merge(RouteRun.where("run_datetime #{sign} '#{params[:datetime]}'"))
     end
-    render json: arel.order("run_datetime DESC"), root: false
+    render json: arel.includes(:route_run => :route).order("run_datetime DESC"), root: false
   end
 
   def smallImage
