@@ -1,4 +1,6 @@
 class RouteRun < ActiveRecord::Base
+  include Workflow
+
   belongs_to :route
   belongs_to :bus
   delegate :locations, to: :route
@@ -25,6 +27,23 @@ class RouteRun < ActiveRecord::Base
       self.remaining_tickets += 1
       save!
     end    
+  end
+
+  workflow do
+    state :not_started do
+      event :start, transitions_to: :running
+    end
+    state :running do
+      event :start, transitions_to: :running
+      event :update_location, transitions_to: :running do |lat, lng|
+        update_attributes!(lat: lat, lng: lng)
+      end
+      event :complete, transitions_to: :complete
+    end
+    state :complete do
+      event :start, transitions_to: :complete
+      event :update_location, transitions_to: :complete
+    end
   end
 
   private

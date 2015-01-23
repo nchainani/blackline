@@ -7,6 +7,22 @@ class RouteRunsController < ApplicationController
     end
   end
 
+  def start
+    route_run.start!
+    render nothing: true
+  end
+
+  def update_location
+    required_params(:lat, :lng)
+    route_run.update_location!(params[:lat], params[:lng])
+    render nothing: true
+  end
+
+  def complete
+    route_run.complete!
+    render nothing: true
+  end
+
   private
 
   def route_run

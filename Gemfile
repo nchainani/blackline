@@ -24,6 +24,7 @@ gem 'simple_token_authentication', '~> 1.0'
 gem 'unicorn'
 gem 'unicorn-rails'
 gem 'capistrano3-unicorn'
+gem 'workflow'
 
 # Use Capistrano for deployment
 gem 'capistrano'
