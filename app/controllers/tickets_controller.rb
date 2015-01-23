@@ -1,6 +1,6 @@
 class TicketsController < ApplicationController
   acts_as_token_authentication_handler_for Rider, fallback_to_devise: false
-  before_filter :rider
+  before_filter :rider, except: :boarded
 
   def create
     required_params(:amount)
@@ -45,6 +45,16 @@ class TicketsController < ApplicationController
     # params = { size: '200x200', data: ticket.uuid }
     # response = HTTParty.get("https://api.qrserver.com/v1/create-qr-code", query: params)
     send_data response.body
+  end
+
+  def boarded
+    ticket = Ticket.find(params[:id])
+    if ticket.status == :confirmed
+      ticket.status = :boarded
+      render nothing: true
+    else
+      render_422("This ticket is not confirmed")
+    end
   end
 
   private

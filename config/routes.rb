@@ -14,6 +14,7 @@ Rails.application.routes.draw do
 
       resources :tickets, only: [:create, :show, :index] do
         get 'smallImage', on: :member
+        post 'boarded', on: :member
       end
 
       resources :passes, only: [:create, :show, :index]
