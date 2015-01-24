@@ -4,15 +4,14 @@ class Route < ActiveRecord::Base
   has_and_belongs_to_many :locations
   scope :active, -> { where(active: true) }
 
+  def runs(now, till)
+    now ||= Time.now
+    till ||= 20.hours.from_now
+    route_runs.where(run_datetime: now..till)
+  end
+
   TIMEZONES = ActiveSupport::TimeZone.zones_map.keys
   enumerize :timezone, in: TIMEZONES
-
-  # runs in the future (excludes past runs)
-  def immediate_runs
-    now = Time.now.utc
-    uptil = now + 20.hours
-    route_runs.where(run_datetime: now..uptil).limit(10)
-  end
 
   def self.find_nearby_routes(lat, lng, radius = 50, options = {})
     nearby_stops = Location.nearby_stops(lat, lng, radius)

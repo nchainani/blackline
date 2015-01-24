@@ -2,7 +2,7 @@ Rails.application.routes.draw do
   scope "/api" do
     scope "/v1" do
       resources :routes, only: [:index, :show] do
-        resources :route_runs, only: [:show] do
+        resources :route_runs, only: [:show, :index] do
           post :start, on: :member
           post :complete, on: :member
           post :update_location, on: :member
@@ -10,6 +10,7 @@ Rails.application.routes.draw do
           get :tickets, on: :member
         end
         get 'autocomplete', on: :collection
+        get 'all', on: :collection
       end
 
       resources :tickets, only: [:create, :show, :index] do

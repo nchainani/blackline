@@ -2,7 +2,7 @@ class RouteSerializer < ActiveModel::Serializer
   attributes :id, :name, :direction, :description, :polyline, :runs, :locations
 
   def runs
-    object.immediate_runs.includes(:bus).map do |run|
+    object.runs(@options[:now], @options[:uptil]).includes(:bus).limit(10).map do |run|
       RouteRunSerializer.new(run, root: false)
     end
   end

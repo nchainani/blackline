@@ -25,4 +25,10 @@ class RoutesController < ApplicationController
     response = HTTParty.get(url, { query: url_params })
     render json: response.body
   end
+
+  def all
+    # returns all route runs in the next 24 hours. This is a temporary endpoint and will be taken out
+    # once each bus has an account
+    render json: Route.all, now: 2.hours.ago, till: 24.hours.from_now, root: false
+  end
 end

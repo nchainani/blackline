@@ -94,4 +94,22 @@ describe "Route Controller spec" do
     bus['bus_type'] = route_run.bus.bus_type
     bus['registration_number'] = route_run.bus.registration_number
   end
+
+  context "GET /routes/all" do
+    it "returns empty list when no routes" do
+      body = api_get "/routes/all"
+      response.status.should == 200
+      body.count.should == 0
+    end
+    it "returns all routes" do
+      route
+      route_run.update_attributes!(run_datetime: 1.hour.ago)
+      body = api_get "/routes/all"
+      response.status.should == 200
+      body.count.should == 1
+      verify_route(body.first, route)
+      body.first['runs'].count.should == 1
+      verify_route_run(body.first['runs'].first, route_run)
+    end
+  end
 end
