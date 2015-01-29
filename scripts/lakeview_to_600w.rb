@@ -6,3 +6,24 @@ route.polyline = "cm~~F`_~uOrIIxCIjGEnJQhJIrHGlBElEE~CGrHIjJQnDsF~BoDz@qAjGwJjAo
 
 Bus.create!(capacity: 38, bus_type: "bus", owner: "M and M", registration_number: "234234")
 route.route_runs.create!(bus_id: 1, run_datetime: Time.parse "2015-01-05 13:30:00", amount: 199, currency: :USD, times: "7:30,7:33,7:37,7:44,7:48,7:55")
+
+
+
+start = Time.parse "2015-01-25 15:30:00"
+
+30.times.each do |index|
+  time = start + index.day
+  time1 = start + index.day - 2.hours
+
+  puts time
+  puts time1
+  puts "******"
+  
+  route.route_runs.create!(bus_id: 1,
+    run_datetime: time1,
+    times: "7:30,7:33,7:37,7:44,7:48,7:55", total_tickets: 38, amount: 199, currency: "USD")
+
+  route.route_runs.create!(bus_id: 1,
+    run_datetime: time,
+    times: "9:30,9:33,9:37,9:44,9:48,9:55", total_tickets: 38, amount: 199, currency: "USD")
+end

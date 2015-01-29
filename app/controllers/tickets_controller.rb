@@ -51,7 +51,7 @@ class TicketsController < ApplicationController
     ticket = Ticket.find(params[:id])
     if ticket.status == :confirmed
       ticket.status = :boarded
-      render nothing: true
+      render_ok
     else
       render_422("This ticket is not confirmed")
     end

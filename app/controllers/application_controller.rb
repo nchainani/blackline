@@ -21,7 +21,9 @@ class ApplicationController < ActionController::API
   def render_422(message=nil); render_error( 422, message || 'resource not found' ); end;
   def render_410(message=nil); render_error( 410, message || 'resource gone' ); end;
   def render_400(message=nil); render_error( 400, message || 'invalid request' ); end;
-
+  def render_ok
+    render json: ''
+  end
   rescue_from ActiveRecord::RecordNotFound do |exception|
     render_404(exception.message)
   end

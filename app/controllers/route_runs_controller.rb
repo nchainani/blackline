@@ -9,7 +9,7 @@ class RouteRunsController < ApplicationController
 
   def start
     route_run.start!
-    render nothing: true
+    location_status
   end
 
   def update_location
@@ -18,12 +18,12 @@ class RouteRunsController < ApplicationController
       location_update = route_run.route_run_location_updates.find_or_create_by!(route_run_id: route_run.id)
       location_update.update_attributes!(lat: params[:lat], lng: params[:lng])
     end
-    render nothing: true
+    location_status
   end
 
   def complete
     route_run.complete!
-    render nothing: true
+    location_status
   end
 
   def location_status

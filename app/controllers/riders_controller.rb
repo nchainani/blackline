@@ -34,12 +34,12 @@ class RidersController < ApplicationController
     if params[:device_token] && params[:device]
       rider.devices.where(device: params[:device], device_token: params[:device_token]).update_all(active: false)
     end
-    render nothing: true
+    render_ok
   end
 
   def destroy
     rider.destroy
-    render nothing: true
+    render_ok
   end
 
   def update_password
@@ -65,6 +65,6 @@ class RidersController < ApplicationController
     token = rider.devices.find_or_create_by!(device: params[:device], device_token: params[:device_token])
     token.active = true
     token.save!
-    render nothing: true
+    render_ok
   end
 end
